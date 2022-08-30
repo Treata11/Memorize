@@ -32,19 +32,21 @@ struct CardView: View {
         return ZStack { //zstack function is a view builder
             let shape = RoundedRectangle(cornerRadius: 13)
             if card.isFaceUp {
-                shape.stroke(lineWidth: 3)
-                shape.fill(.yellow)
+                shape.fill(.white)
+                shape.strokeBorder(lineWidth: 1.618)
                 Text(card.content).font(.largeTitle)
             } else {
-                shape
-                    .fill(.red)
-                }
+                shape.fill(.red)
+            }
         }
+        .foregroundColor(.red)
     }
 }
 
 
 
+           
+            
 
 
 
@@ -58,8 +60,7 @@ struct CardView: View {
 
 
 
-
-
+    
 
 
 
@@ -69,8 +70,12 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(viewModel: game)
-            .preferredColorScheme(.dark)
+        Group {
+            ContentView(viewModel: game)
+                .preferredColorScheme(.dark)
+            ContentView(viewModel: game)
+                .preferredColorScheme(.dark)
+        }
         ContentView(viewModel: game)
             .preferredColorScheme(.light)
         }
