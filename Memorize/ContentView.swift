@@ -11,17 +11,18 @@ struct ContentView: View {
     let viewModel: EmojiMemoryGame
     
     var body: some View {
-        VStack {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 69))]) {
-                    ForEach(viewModel.cards) { card in
+                    ForEach(viewModel .cards) { card in
                         CardView(card: card)
                             .aspectRatio(1000/1618, contentMode: .fit)
+                            .onTapGesture{
+                                viewModel.choose(card)
+                            }
                     }
                 }
             }
             .foregroundColor(.orange ) //function with arguement label
-        }
         .padding(.horizontal)
     }
 
@@ -30,13 +31,13 @@ struct CardView: View {
 
     var body: some View {
         return ZStack { //zstack function is a view builder
-            let shape = RoundedRectangle(cornerRadius: 13)
+            let shape = RoundedRectangle(cornerRadius: 11)
             if card.isFaceUp {
                 shape.fill(.white)
-                shape.strokeBorder(lineWidth: 1.618)
+                shape.strokeBorder(lineWidth: 2.6)
                 Text(card.content).font(.largeTitle)
             } else {
-                shape.fill(.red)
+                shape.fill(Color(.red))
             }
         }
         .foregroundColor(.red)
@@ -71,8 +72,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
         Group {
-            ContentView(viewModel: game)
-                .preferredColorScheme(.dark)
             ContentView(viewModel: game)
                 .preferredColorScheme(.dark)
         }
