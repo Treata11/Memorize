@@ -20,6 +20,7 @@ struct MemoryGame<CardContent> {
             if cards[index].id == card.id {
                 return UInt8(index)
             }
+            print("chosenIndex \(cards)")
         }
         return 0 //bogus!
     }

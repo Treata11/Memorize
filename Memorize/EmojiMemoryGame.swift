@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-class EmojiMemoryGame {
+class EmojiMemoryGame: ObservableObject {
 //    private(set) var  cards: MemoryGame<String> //or we can omit <set>
     //set does allow the mv to look at the private var but not tauching it.
     //here we use only the private method.
@@ -20,8 +20,8 @@ class EmojiMemoryGame {
         EmojiMemoryGame.emojis[pairIndex]
         }
     }
-    
-     private var model: MemoryGame<String> = creatMemoryGame()
+
+     @Published private var model: MemoryGame<String> = creatMemoryGame()
     
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
@@ -30,6 +30,7 @@ class EmojiMemoryGame {
     // MARK: - Intent(s)
     
     func choose(_ card: MemoryGame<String>.Card) {
+//        objectWillChange.send()   //send to the world that objectWillChange.
         model .choose(card)
     }
 }
