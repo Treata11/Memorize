@@ -11,15 +11,15 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 69))]) {
-                    ForEach(viewModel .cards) { card in
-                        CardView(card: card)
-                            .aspectRatio(1000/1618, contentMode: .fit)
-                            .onTapGesture{
-                                viewModel.choose(card)
-                            }
-                    }
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 66))]) {
+                ForEach(viewModel .cards) { card in
+                    CardView(card: card)
+                        .aspectRatio(1000/1618, contentMode: .fit)
+                        .onTapGesture{
+                            viewModel.choose(card)
+                        }
+                    } 
                 }
             }
             .foregroundColor(.orange ) //function with arguement label
