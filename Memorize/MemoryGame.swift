@@ -65,8 +65,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
-        var content: CardContent
-        var id: UInt8
+        let content: CardContent
+        let id: UInt8
     }
     
     //MARK: - Randomizer
