@@ -26,7 +26,30 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 //            return EmojiMemoryGame.Theme.People(Emojis: <#T##String#>, numberOfPairsOfCards: <#T##UInt8#>, Color: <#T##String#>) //bogus!
     }
     
-    private var indexOfOnlyAndOnlyCardFaceUp: UInt8? = Optional<UInt8> .none
+    private var indexOfOnlyAndOnlyCardFaceUp: UInt8? {
+        get {
+            var faceUpCardIndices = [UInt8]()
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    faceUpCardIndices.append(UInt8(index))
+                }
+            }
+            if faceUpCardIndices.count  == 1 {
+                return faceUpCardIndices.first
+            } else {
+               return nil
+            }
+        }
+        set {
+            for index in cards.indices {
+                if index != newValue!  {  //sets a newValue for the computed variable in setter
+                    cards[index].isFaceUp = false
+                } else {
+                    cards[index].isFaceUp = true
+                }
+            }
+        }
+    }
     
     mutating func choose(_ card: Card) -> Void {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
@@ -38,14 +61,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[Int(potentialMatchIndex)].isMatched = true
                     cards[chosenIndex].isMatched = true
                 }
-                indexOfOnlyAndOnlyCardFaceUp = nil
+                cards[Int(chosenIndex)].isFaceUp = true
             } else {
-                for index in cards.indices {
-                    cards[index].isFaceUp = false
-                }
                 indexOfOnlyAndOnlyCardFaceUp = UInt8(chosenIndex)
             }
-            cards[Int(chosenIndex)].isFaceUp.toggle()
         }
         
         print("\(cards)")

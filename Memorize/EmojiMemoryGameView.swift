@@ -30,7 +30,7 @@ struct CardView: View {
     private let card: EmojiMemoryGame.Card
     
     init(_ card: EmojiMemoryGame.Card) {
-        self.card = card 
+        self.card = card
     }
 
     var body: some View {
