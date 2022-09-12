@@ -26,29 +26,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 //            return EmojiMemoryGame.Theme.People(Emojis: <#T##String#>, numberOfPairsOfCards: <#T##UInt8#>, Color: <#T##String#>) //bogus!
     }
     
-    private var indexOfOnlyAndOnlyCardFaceUp: UInt8? {
-        get {
-            var faceUpCardIndices = [UInt8]()
-            for index in cards.indices {
-                if cards[index].isFaceUp {
-                    faceUpCardIndices.append(UInt8(index))
-                }
-            }
-            if faceUpCardIndices.count  == 1 {
-                return faceUpCardIndices.first
-            } else {
-               return nil
-            }
-        }
-        set {
-            for index in cards.indices {
-                if index != newValue!  {  //sets a newValue for the computed variable in setter
-                    cards[index].isFaceUp = false
-                } else {
-                    cards[index].isFaceUp = true
-                }
-            }
-        }
+    private var indexOfOnlyAndOnlyCardFaceUp: Int? {
+        get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
+        set { cards.indices.forEach { cards[$0 ].isFaceUp = ($0 == newValue!) } }    //trailing closure syntax
     }
     
     mutating func choose(_ card: Card) -> Void {
@@ -63,7 +43,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 }
                 cards[Int(chosenIndex)].isFaceUp = true
             } else {
-                indexOfOnlyAndOnlyCardFaceUp = UInt8(chosenIndex)
+                indexOfOnlyAndOnlyCardFaceUp = chosenIndex
             }
         }
         
@@ -104,6 +84,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 
 }
 
-
+extension Array {
+    var oneAndOnly: Element?  {
+        if self.count  == 1 {
+            return self.first
+        } else {
+           return nil
+        }
+    }
+}
 
 
