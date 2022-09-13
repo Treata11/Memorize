@@ -34,19 +34,21 @@ struct CardView: View {
     }
 
     var body: some View {
-        return ZStack { //zstack function is a view builder
-            let shape = RoundedRectangle(cornerRadius: 11)
-            if card.isFaceUp {
-                shape.fill(.white)
-                shape.strokeBorder(lineWidth: 2.6)
-                Text(card.content).font(.largeTitle)
-            } else if card.isMatched {
-                shape.opacity(0.013)
-            } else {
-                shape.fill(Color(.red))
+        GeometryReader(content: { geometry in
+            ZStack {
+                let shape = RoundedRectangle(cornerRadius: 11)
+                if card.isFaceUp {
+                    shape.fill(.white)
+                    shape.strokeBorder(lineWidth: 2.6)
+                    Text(card.content).font(Font.system(size: min(geometry.size.width, geometry.size.height) * 0.81 ))
+                } else if card.isMatched {
+                    shape.opacity(0.113)
+                } else {
+                    shape.fill()
+                }
             }
-        }
-        .foregroundColor(.red)
+        })
+        .edgesIgnoringSafeArea([.top])
     }
 }
 
