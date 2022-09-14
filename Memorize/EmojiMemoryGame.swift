@@ -31,8 +31,8 @@ class EmojiMemoryGame: ObservableObject {
 
      @Published private var model = creatMemoryGame()
     
-    var cards: Array<MemoryGame<String>.Card> {
-        return model.cards
+    var cards: Array<Card> {
+        model.cards
     }
     
     //MARK: - Theme(s)
