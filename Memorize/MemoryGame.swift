@@ -10,22 +10,6 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     
-    // MARK: - Theme(s)
-    enum Theme: Equatable {
-        case Halloween(Emojis: Array<String>, numberOfPairsOfCards: UInt8, Color: String)
-        
-        case People(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Animals(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Flags(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Vehicles(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-//        func chooseTheme(_ Theme: String) -> EmojiMemoryGame.Theme {
-//            return EmojiMemoryGame.Theme.People(Emojis: <#T##String#>, numberOfPairsOfCards: <#T##UInt8#>, Color: <#T##String#>) //bogus!
-    }
-    
     private var indexOfOnlyAndOnlyCardFaceUp: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
         set { cards.indices.forEach { cards[$0 ].isFaceUp = ($0 == newValue!) } }    //trailing closure syntax
@@ -46,9 +30,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 indexOfOnlyAndOnlyCardFaceUp = chosenIndex
             }
         }
-        
-        print("\(cards)")
     }
+    
     init(numberOfPairsOfCards: UInt8, creatCardContent: (UInt8) -> CardContent) {
         cards = []
         
@@ -68,22 +51,23 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         let id: UInt8
     }
     
-    //MARK: - Randomizer
-
-    class LinearCongruentialGenerator  {
-        var lastRandom = 42.0
-        let m = 139968.0
-        let a = 3877.0
-        let c = 29573.0
-        func random() -> Double {
-            lastRandom = ((lastRandom * a + c)
-                .truncatingRemainder(dividingBy:m))
-            return lastRandom / m
-        }
+    // MARK: - Theme(s)
+    enum Theme: Equatable {
+        case Halloween(Emojis: Array<String>, numberOfPairsOfCards: UInt8, Color: String)
+        
+        case People(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
+        
+        case Animals(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
+        
+        case Flags(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
+        
+        case Vehicles(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
+        
+//        func chooseTheme(_ Theme: String) -> EmojiMemoryGame.Theme {
+//            return EmojiMemoryGame.Theme.People(Emojis: <#T##String#>, numberOfPairsOfCards: <#T##UInt8#>, Color: <#T##String#>) //bogus!
     }
-
 }
-
+    
 extension Array {
     var oneAndOnly: Element?  {
         if self.count  == 1 {
@@ -94,4 +78,17 @@ extension Array {
     }
 }
 
+    //MARK: - Randomizer
+
+//    class LinearCongruentialGenerator  {
+//        var lastRandom = 42.0
+//        let m = 139968.0
+//        let a = 3877.0
+//        let c = 29573.0
+//        func random() -> Double {
+//            lastRandom = ((lastRandom * a + c)
+//                .truncatingRemainder(dividingBy:m))
+//            return lastRandom / m
+//        }
+//    }
 
