@@ -36,15 +36,22 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     //MARK: - Theme(s)
-    private static let Halloween = MemoryGame<String>.Theme.Halloween(Emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",], numberOfPairsOfCards: 10, Color: ".orange")
+    typealias Theme = MemoryGame<String>.Theme
     
-    private static let VehicleEmojis = MemoryGame<String>.Theme.Vehicles(Emojis: ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"], numberOfPairsOfCards: 12, Color: ".red")
+    private static let Halloween = Theme.Halloween(Emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",], numberOfPairsOfCards: 10, Color: ".orange")
     
-    private static let Flags = MemoryGame<String>.Theme.Flags(Emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"], numberOfPairsOfCards: 6, Color: ".blue")
+    private static let VehicleEmojis = Theme.Vehicles(Emojis: ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"], numberOfPairsOfCards: 12, Color: ".red")
     
-    private static let Animals = MemoryGame<String>.Theme.Animals(Emojis: ["🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄", "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬", "🦢", "🐿", "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"], numberOfPairsOfCards: 16, Color: ".green")
+    private static let Flags = Theme.Flags(Emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"], numberOfPairsOfCards: 6, Color: ".blue")
     
-    private static let People = MemoryGame<String>.Theme.People(Emojis: ["😃", "😍", "😝", "🧐", "😎", "😒", "😱", "☹️", "🥶", "😡", "😶‍🌫️", "🫥", "🤢", "💩", "🤔", "🤩", "🥳", "😜", "🤪", "😇", "🥹", "😂", "🥸", "🤯", "😳", "🫠", "😬", "😈", "🤡", "😻", "😿", "🤠", "😵‍💫"],  numberOfPairsOfCards: 20, Color: ".yellow")
+    private static let Animals = Theme.Animals(Emojis: ["🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄", "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬", "🦢", "🐿", "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"], numberOfPairsOfCards: 16, Color: ".cream")
+    
+    private static let People = Theme.People(Emojis: ["😃", "😍", "😝", "🧐", "😎", "😒", "😱", "☹️", "🥶", "😡", "😶‍🌫️", "🫥", "🤢", "💩", "🤔", "🤩", "🥳", "😜", "🤪", "😇", "🥹", "😂", "🥸", "🤯", "😳", "🫠", "😬", "😈", "🤡", "😻", "😿", "🤠", "😵‍💫"],  numberOfPairsOfCards: 20, Color: ".yellow")
+    
+    private static let Plants = Theme.Plants(Emojis: ["🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🍄", "🪸", "🌾", "💐", "💐", "🪷", "🌺", "🌸", "🌼", "🌻", "🌹"], numberOfPairsOfCards: 14, Color: ".green")
+    
+    private static let Food = Theme.Food(Emojis: ["🍖", "🥩", "🥓", "🥞", "🥐", "🥯", "🫒", "🥑", "🍏", "🍆", "🍌", "🥥", "🥟", "🍥", "🍚", "🍤", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱", "🥘", "🥗", "🫔", "🌭", "🌮", "🌯", "🍿", "🍫", "🍭", "🍬", "🍦", "🍧", "🍢", "🥮", "🍱", "🍡"], numberOfPairsOfCards: 20, Color: ".orange")
+    
     // MARK: - Intent(s)
     
     func choose(_ card: Card) { //typealias

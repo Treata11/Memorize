@@ -22,12 +22,12 @@ struct EmojiMemoryGameView: View {
                     } 
                 }
             }
-            .foregroundColor(.orange ) //function with arguement label
+            .foregroundColor(.orange )
         .padding(.horizontal)
     }
 
 struct CardView: View {
-    private let card: EmojiMemoryGame.Card
+    private let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card

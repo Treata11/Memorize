@@ -15,7 +15,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         set { cards.indices.forEach { cards[$0 ].isFaceUp = ($0 == newValue!) } }    //trailing closure syntax
     }
     
-    mutating func choose(_ card: Card) -> Void {
+    internal mutating func choose(_ card: Card) -> Void {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
@@ -62,6 +62,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         case Flags(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
         
         case Vehicles(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
+        
+        case Plants(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
+        
+        case Food(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
         
 //        func chooseTheme(_ Theme: String) -> EmojiMemoryGame.Theme {
 //            return EmojiMemoryGame.Theme.People(Emojis: <#T##String#>, numberOfPairsOfCards: <#T##UInt8#>, Color: <#T##String#>) //bogus!
