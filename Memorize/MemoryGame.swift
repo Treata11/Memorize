@@ -11,11 +11,13 @@ import SwiftUI
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     
+    private(set) var score = 0
+
     private var indexOfOnlyAndOnlyCardFaceUp: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
         set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue!) } }
     }
-    
+
     internal mutating func choose(_ card: Card) -> Void {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
            !cards[chosenIndex].isFaceUp,
@@ -27,9 +29,19 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if cards[chosenIndex].content == cards[Int(potentialMatchIndex)].content {
                     cards[Int(potentialMatchIndex)].isMatched = true
                     cards[chosenIndex].isMatched = true
+                    score += 2
+                } else {
+                    if cards[indexOfOnlyAndOnlyCardFaceUp!].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen {
+                        score -= 1
+                    }
                 }
                 cards[Int(chosenIndex)].isFaceUp = true
             } else {
+                for index in cards.indices {
+                    if cards[index].isFaceUp {
+                        cards[index].hasAlreadyBeenSeen = true
+                    }
+                }
                 indexOfOnlyAndOnlyCardFaceUp = chosenIndex
             }
         }
@@ -62,17 +74,30 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Identifiable {
         var isFaceUp = false
         var isMatched = false
-        var timesSeen: UInt8 = 0
+        var hasAlreadyBeenSeen = false
         let content: CardContent
         let id: UInt8
     }
-
 }
+    // MARK: - Scoring
+    var Points: Int = 0
+//    mutating func Score() {
+//        for index in self.cards {
+//            if Card.timesSeen < 2 {
+//                self.Points += 2
+//            } else if cards[index].timesSeen == 2 {
+//                self.Points += 1
+//            } else {
+//                self.Points = Points - cards[index].timesSeen + 3
+//            }
+//        }
+//    }
+//}
 
 // MARK: -Extention(s)
 
 extension Array {
-    var oneAndOnly: Element?  {
+    var oneAndOnly: Element? {
         if self.count  == 1 {
             return self.first
         } else {
@@ -80,5 +105,4 @@ extension Array {
         }
     }
 }
-
 
