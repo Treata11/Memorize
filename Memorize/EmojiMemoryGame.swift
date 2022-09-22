@@ -20,7 +20,6 @@ class EmojiMemoryGame: ObservableObject {
         theme.emojis.shuffle()
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
-   private static let vehicleEmojis: Array<String> = ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"]
     
     static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         MemoryGame<String>(numberOfPairsOfCards: theme.numberOfPairsOfCards) { pairIndex in
@@ -32,9 +31,6 @@ class EmojiMemoryGame: ObservableObject {
     
     private var theme: Theme
     
-    var nameOfTheme: String {
-        theme.name
-    }
     var colorOfTheme: Color {
         switch theme.color {
         case "red" : return .red
@@ -47,6 +43,15 @@ class EmojiMemoryGame: ObservableObject {
         default: return .blue
         }
     }
+    
+    var score: Int {
+        model.score
+    }
+    
+    var nameOfTheme: String {
+        theme.name
+    }
+
     var cards: Array<Card> {
         model.cards
     }
@@ -55,14 +60,14 @@ class EmojiMemoryGame: ObservableObject {
     
     static var themes: Array<Theme> = [
         Theme(name:"Halloween", emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",],
-              numberOfPairsOfCards: 10,
+              numberOfPairsOfCards: 12,
               color: "orange"
              ),
         Theme(name: "VehicleEmojis",
               emojis: ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"],
               numberOfPairsOfCards: 12,
               color: "red"
-             ),
+              ),
         Theme(name: "Flags",
               emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
               numberOfPairsOfCards: 6,

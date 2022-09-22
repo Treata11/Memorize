@@ -13,7 +13,12 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         VStack {
             ScrollView {
-                Text(game.nameOfTheme).font(.largeTitle).foregroundColor(game.colorOfTheme).colorInvert()
+                HStack {
+                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme).colorInvert()
+                    Spacer()
+                    Text("Points: \(game.score)")
+                }
+                .padding()
                 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 66))]) {
                     ForEach(game.cards) { card in
