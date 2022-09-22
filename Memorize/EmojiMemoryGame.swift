@@ -32,9 +32,6 @@ class EmojiMemoryGame: ObservableObject {
     
     private var theme: Theme
     
-    var nameOfTheme: String {
-        theme.name
-    }
     var colorOfTheme: Color {
         switch theme.color {
         case "red" : return .red
@@ -47,6 +44,11 @@ class EmojiMemoryGame: ObservableObject {
         default: return .blue
         }
     }
+    
+    var nameOfTheme: String {
+        theme.name
+    }
+    
     var cards: Array<Card> {
         model.cards
     }
