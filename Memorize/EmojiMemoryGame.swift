@@ -43,7 +43,7 @@ class EmojiMemoryGame: ObservableObject {
         default: return .blue
         }
     }
-    
+
     var score: Int {
         model.score
     }
@@ -51,7 +51,7 @@ class EmojiMemoryGame: ObservableObject {
     var nameOfTheme: String {
         theme.name
     }
-
+    
     var cards: Array<Card> {
         model.cards
     }
