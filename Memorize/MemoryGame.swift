@@ -21,9 +21,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         case Flags(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
         
         case Vehicles(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-//        func chooseTheme(_ Theme: String) -> EmojiMemoryGame.Theme {
-//            return EmojiMemoryGame.Theme.People(Emojis: <#T##String#>, numberOfPairsOfCards: <#T##UInt8#>, Color: <#T##String#>) //bogus!
     }
     
     private var indexOfOnlyAndOnlyCardFaceUp: Int? {
