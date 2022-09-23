@@ -14,9 +14,9 @@ struct EmojiMemoryGameView: View {
         VStack {
             ScrollView {
                 HStack {
-                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme).colorInvert()
+                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
                     Spacer()
-                    Text("Points: \(game.score)")
+                    Text("Points: \(game.score)").colorInvert()
                 }
                 .padding()
                 
@@ -53,7 +53,7 @@ struct CardView: View {
             ZStack {
                 let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius )
                 if card.isFaceUp {
-                    shape.fill(.white)
+                    shape.fill(.white).blur(radius: 39)
                     shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                     Text(card.content).font(font(in: geometry.size))
                 } else if card.isMatched {

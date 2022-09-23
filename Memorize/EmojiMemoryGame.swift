@@ -35,7 +35,7 @@ class EmojiMemoryGame: ObservableObject {
         switch theme.color {
         case "red" : return .red
         case "fuchsia": return .purple
-        case "cream": return .white
+        case "cream": return .accentColor
         case "yellow": return .yellow
         case "green": return .green
         case "orange": return .orange
@@ -60,7 +60,7 @@ class EmojiMemoryGame: ObservableObject {
     
     static var themes: Array<Theme> = [
         Theme(name:"Halloween", emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",],
-              numberOfPairsOfCards: 12,
+              numberOfPairsOfCards: 6,
               color: "orange"
              ),
         Theme(name: "VehicleEmojis",
@@ -89,7 +89,7 @@ class EmojiMemoryGame: ObservableObject {
               color: "green"
              ),
         Theme(name: "Food",
-              emojis: ["🍖", "🥩", "🥓", "🥞", "🥐", "🥯", "🫒", "🥑", "🍏", "🍆", "🍌", "🥥", "🥟", "🍥", "🍚", "🍤", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱", "🥘", "🥗", "🫔", "🌭", "🌮", "🌯", "🍿", "🍫", "🍭", "🍬", "🍦", "🍧", "🍢", "🥮", "🍱", "🍡"],
+              emojis: ["🍖", "🥩", "🥓", "🥞", "🥐", "🥯", "🫒", "🥑", "🍏", "🍆", "🍌", "🥥", "🥟", "🍥", "🍚", "🍤", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱", "🥘", "🥗", "🫔", "🌭", "🌮", "🌯", "🍿", "🍫", "🍭", "🍬", "🍦", "🍧", "🍢", "🥮", "🍡"],
               numberOfPairsOfCards: 18,
               color: "pink"
              )
