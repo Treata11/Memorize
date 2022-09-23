@@ -77,21 +77,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         let id: UInt8
     }
 }
-    // MARK: - Scoring
-    var Points: Int = 0
-//    mutating func Score() {
-//        for index in self.cards {
-//            if Card.timesSeen < 2 {
-//                self.Points += 2
-//            } else if cards[index].timesSeen == 2 {
-//                self.Points += 1
-//            } else {
-//                self.Points = Points - cards[index].timesSeen + 3
-//            }
-//        }
-//    }
-//}
-
 
 // MARK: -Extention(s)
 extension Array {
