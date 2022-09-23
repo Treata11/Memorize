@@ -15,43 +15,100 @@ class EmojiMemoryGame: ObservableObject {
     //set does allow the MV to look at the private var but not tauching it.
     //In this case we use only the private method for trivial reasons.
     
-   private static let vehicleEmojis: Array<String> = ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"]
+    init() {
+        theme = EmojiMemoryGame.themes.randomElement()! //Required Task 11
+        theme.emojis.shuffle()
+        model = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
     
-    static func creatMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairsOfCards: 8) { pairIndex in
-            EmojiMemoryGame.vehicleEmojis[Int(pairIndex)]
+    static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
+        MemoryGame<String>(numberOfPairsOfCards: theme.numberOfPairsOfCards) { pairIndex in
+            return theme.emojis[pairIndex]
+        }
+    }
+
+    @Published private var model: MemoryGame<String>
+    
+    private var theme: Theme
+    
+    var colorOfTheme: Color {
+        switch theme.color {
+        case "red" : return .red
+        case "fuchsia": return .purple
+        case "cream": return .accentColor
+        case "yellow": return .yellow
+        case "green": return .green
+        case "orange": return .orange
+        case"pink": return .pink
+        default: return .blue
         }
     }
     
-//    static func CreatMemoryGame() -> MemoryGame<String> {
-//        for case in MemoryGame<String>.Theme.case {
-//            MemoryGame<String>.Theme.
-//        }
-//    }
-
-     @Published private var model = creatMemoryGame()
+    var score: Int {
+        model.score
+    }
     
-    var cards: Array<MemoryGame<String>.Card> {
-        return model.cards
+    var nameOfTheme: String {
+        theme.name
+    }
+
+    var cards: Array<Card> {
+        model.cards
     }
     
     //MARK: - Theme(s)
-    private static let Halloween = MemoryGame<String>.Theme.Halloween(Emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",], numberOfPairsOfCards: 10, Color: ".orange")
     
-    private static let VehicleEmojis = MemoryGame<String>.Theme.Vehicles(Emojis: ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"], numberOfPairsOfCards: 12, Color: ".red")
+    static var themes: Array<Theme> = [
+        Theme(name:"Halloween", emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",],
+              numberOfPairsOfCards: 6,
+              color: "orange"
+             ),
+        Theme(name: "VehicleEmojis",
+              emojis: ["🛸", "🚤", "🏍", "🚁", "🚀", "🚄", "🛩", "🛥", "🚢", "🛰", "🚜", "🚠", "🛶", "⛵️", "🚂", "🚟", "🚔", "🛴", "🦽", "🛻", "🚕", "🎠", "🎢", "🏎"],
+              numberOfPairsOfCards: 12,
+              color: "red"
+              ),
+        Theme(name: "Flags",
+              emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
+              numberOfPairsOfCards: 6,
+              color: "fuchsia"
+             ),
+        Theme(name: "Animals",
+              emojis: ["🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄", "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬", "🦢", "🐿", "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"],
+              numberOfPairsOfCards: 16,
+               color: "cream"
+             ),
+        Theme(name: "People",
+              emojis: ["😃", "😍", "😝", "🧐", "😎", "😒", "😱", "☹️", "🥶", "😡", "😶‍🌫️", "🫥", "🤢", "💩", "🤔", "🤩", "🥳", "😜", "🤪", "😇", "🥹", "😂", "🥸", "🤯", "😳", "🫠", "😬", "😈", "🤡", "😻", "😿", "🤠", "😵‍💫"],
+              numberOfPairsOfCards: 20,
+              color: "yellow"
+             ),
+        Theme(name: "Plants",
+              emojis: ["🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🍄", "🪸", "🌾", "💐", "💐", "🪷", "🌺", "🌸", "🌼", "🌻", "🌹"],
+              numberOfPairsOfCards: 14,
+              color: "green"
+             ),
+        Theme(name: "Food",
+              emojis: ["🍖", "🥩", "🥓", "🥞", "🥐", "🥯", "🫒", "🥑", "🍏", "🍆", "🍌", "🥥", "🥟", "🍥", "🍚", "🍤", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱", "🥘", "🥗", "🫔", "🌭", "🌮", "🌯", "🍿", "🍫", "🍭", "🍬", "🍦", "🍧", "🍢", "🥮", "🍡"],
+              numberOfPairsOfCards: 18,
+              color: "pink"
+             )
+    ]
     
-    private static let Flags = MemoryGame<String>.Theme.Flags(Emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"], numberOfPairsOfCards: 6, Color: ".blue")
-    
-    private static let Animals = MemoryGame<String>.Theme.Animals(Emojis: ["🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄", "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬", "🦢", "🐿", "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"], numberOfPairsOfCards: 16, Color: ".green")
-    
-    private static let People = MemoryGame<String>.Theme.People(Emojis: ["😃", "😍", "😝", "🧐", "😎", "😒", "😱", "☹️", "🥶", "😡", "😶‍🌫️", "🫥", "🤢", "💩", "🤔", "🤩", "🥳", "😜", "🤪", "😇", "🥹", "😂", "🥸", "🤯", "😳", "🫠", "😬", "😈", "🤡", "😻", "😿", "🤠", "😵‍💫"],  numberOfPairsOfCards: 20, Color: ".yellow")
-    // MARK: - Intent(s)
+    //MARK: - Intent(s)
     
     func choose(_ card: Card) { //typealias
         objectWillChange.send()   //send to the world that objectWillChange.
         model.choose(card)
     }
+    
+    func newGame() {
+        theme = EmojiMemoryGame.themes.randomElement()! //Required Task 11
+        theme.emojis.shuffle()
+        model = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
 }
+
 
 
 

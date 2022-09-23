@@ -11,23 +11,38 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 66))]) {
-                ForEach(game .cards) { card in
-                    CardView(card)
-                        .aspectRatio(1000/1618, contentMode: .fit)
-                        .onTapGesture{
-                            game.choose(card)
-                        }
-                    } 
+        VStack {
+            ScrollView {
+                HStack {
+                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
+                    Spacer()
+                    Text("Points: \(game.score)").colorInvert()
                 }
-            }
-            .foregroundColor(.orange ) //function with arguement label
-        .padding(.horizontal)
+                .padding()
+                
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 66))]) {
+                    ForEach(game.cards) { card in
+                        CardView(card)
+                            .aspectRatio(1000/1618, contentMode: .fit)
+                            .layoutPriority(100)
+                            .onTapGesture{
+                                game.choose(card)
+                            }
+                        }
+                }
+                Button {
+                    game.newGame()
+                } label: {
+                    Image(systemName: "gamecontroller").font(.largeTitle)
+                }
+                }
+            .foregroundColor(game.colorOfTheme)
+            .padding(.horizontal)
+        }
     }
 
 struct CardView: View {
-    private let card: EmojiMemoryGame.Card
+    private let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
@@ -38,7 +53,7 @@ struct CardView: View {
             ZStack {
                 let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius )
                 if card.isFaceUp {
-                    shape.fill(.white)
+                    shape.fill(.white).blur(radius: 39)
                     shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                     Text(card.content).font(font(in: geometry.size))
                 } else if card.isMatched {
