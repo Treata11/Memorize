@@ -11,23 +11,8 @@ import SwiftUI
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     
-<<<<<<< HEAD
-    // MARK: - Theme(s)
-    enum Theme: Equatable {
-        case Halloween(Emojis: Array<String>, numberOfPairsOfCards: UInt8, Color: String)
-        
-        case People(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Animals(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Flags(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Vehicles(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-    }
-=======
     private(set) var score = 0
->>>>>>> origin/alpha
-    
+
     private var indexOfOnlyAndOnlyCardFaceUp: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
         set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue!) } }
