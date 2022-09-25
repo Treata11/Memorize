@@ -29,7 +29,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[chosenIndex].isMatched = true
                     score += 2
                 } else {
-                    if cards[indexOfOnlyAndOnlyCardFaceUp!].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen {
+                    if cards[indexOfOnlyAndOnlyCardFaceUp!].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen || cards[chosenIndex].hasAlreadyBeenSeen {
                         score -= 1
                     }
                 }
