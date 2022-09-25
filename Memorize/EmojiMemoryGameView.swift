@@ -15,16 +15,22 @@ struct EmojiMemoryGameView: View {
             HStack {
                 Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
                 Spacer()
-                Text("Points: \(game.score)").colorInvert()
+                Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
             }
             
-            AspectVGrid(items: game.cards, aspectRatio: 1000/1618, content: {card in CardView(card)
-                    .padding(3.3)
-                    .layoutPriority(100)
-                    .onTapGesture {
-                    game.choose(card)
+            AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
+                if card.isMatched && !card.isFaceUp {
+                    RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
+                } else {
+                    CardView(card)
+                        .padding(3.3)
+                        .layoutPriority(100)
+                        .onTapGesture {
+                        game.choose(card)
                         }
-                })
+                    }
+                }
+            .foregroundColor(game.colorOfTheme)
 
                     Button {
                         game.newGame()
@@ -67,7 +73,7 @@ struct CardView: View, Animatable {
         (Font.system(size: min(size.width, size.height) * DrawingConstants.fontScale ))
     }
     
-    private struct DrawingConstants {
+    struct DrawingConstants { //bogus, must be private
         static let cornerRadius: CGFloat = 11
         static let lineWidth: CGFloat = 2.6
         static let fontScale: CGFloat = 0.81
