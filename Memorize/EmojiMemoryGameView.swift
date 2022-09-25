@@ -12,36 +12,39 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
-            ScrollView {
-                HStack {
-                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
-                    Spacer()
-                    Text("Points: \(game.score)").colorInvert()
-                }
-                .padding()
-                
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 66))]) {
-                    ForEach(game.cards) { card in
-                        CardView(card)
-                            .aspectRatio(1000/1618, contentMode: .fit)
-                            .layoutPriority(100)
-                            .onTapGesture{
-                                game.choose(card)
-                            }
+            HStack {
+                Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
+                Spacer()
+                Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
+            }
+            
+            AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
+                if card.isMatched && !card.isFaceUp {
+                    RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
+                } else {
+                    CardView(card)
+                        .padding(3.3)
+                        .layoutPriority(100)
+                        .onTapGesture {
+                        game.choose(card)
                         }
-                }
-                Button {
-                    game.newGame()
-                } label: {
-                    Image(systemName: "gamecontroller").font(.largeTitle)
-                }
+                    }
                 }
             .foregroundColor(game.colorOfTheme)
-            .padding(.horizontal)
-        }
-    }
 
-struct CardView: View {
+                    Button {
+                        game.newGame()
+                    } label: {
+                        Image(systemName: "gamecontroller").font(.largeTitle)
+                    }
+                    
+                .foregroundColor(game.colorOfTheme)
+                .padding(.horizontal)
+        }
+//    }
+}
+    
+struct CardView: View, Animatable {
     private let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     init(_ card: EmojiMemoryGame.Card) {
@@ -63,14 +66,14 @@ struct CardView: View {
                 }
             }
         })
-        .edgesIgnoringSafeArea([.top])
+//        .edgesIgnoringSafeArea([])
     }
     
     private func font(in size: CGSize) -> Font {
         (Font.system(size: min(size.width, size.height) * DrawingConstants.fontScale ))
     }
     
-    private struct DrawingConstants {
+    struct DrawingConstants { //bogus, must be private
         static let cornerRadius: CGFloat = 11
         static let lineWidth: CGFloat = 2.6
         static let fontScale: CGFloat = 0.81

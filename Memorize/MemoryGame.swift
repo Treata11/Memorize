@@ -11,23 +11,8 @@ import SwiftUI
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     
-<<<<<<< HEAD
-    // MARK: - Theme(s)
-    enum Theme: Equatable {
-        case Halloween(Emojis: Array<String>, numberOfPairsOfCards: UInt8, Color: String)
-        
-        case People(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Animals(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Flags(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-        
-        case Vehicles(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
-    }
-=======
     private(set) var score = 0
->>>>>>> origin/alpha
-    
+ 
     private var indexOfOnlyAndOnlyCardFaceUp: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
         set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue!) } }
@@ -44,7 +29,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[chosenIndex].isMatched = true
                     score += 2
                 } else {
-                    if cards[indexOfOnlyAndOnlyCardFaceUp!].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen {
+                    if cards[indexOfOnlyAndOnlyCardFaceUp!].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen || cards[chosenIndex].hasAlreadyBeenSeen {
                         score -= 1
                     }
                 }
@@ -94,7 +79,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 }
 
 // MARK: -Extention(s)
-extension Array {
+extension Array where Element: Hashable  {
     var oneAndOnly: Element? {
         if self.count  == 1 {
             return self.first
@@ -103,4 +88,5 @@ extension Array {
         }
     }
 }
+
 
