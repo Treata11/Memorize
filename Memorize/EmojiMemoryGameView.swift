@@ -11,36 +11,30 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     
     var body: some View {
-//        VStack {
-//            ScrollView {
-//                HStack {
-//                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
-//                    Spacer()
-//                    Text("Points: \(game.score)").colorInvert()
-//                }
-//                .padding()
-//
-//                LazyVGrid(columns: [GridItem(.adaptive(minimum: 66))]) {
-//                    ForEach(game.cards) { card in
-        AspectVGrid(items: game.cards, aspectRatio: 1000/1618, content: {card in CardView(card)
-                    .aspectRatio(1000/1618, contentMode: .fit)
+        VStack {
+            HStack {
+                Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
+                Spacer()
+                Text("Points: \(game.score)").colorInvert()
+            }
+            
+            AspectVGrid(items: game.cards, aspectRatio: 1000/1618, content: {card in CardView(card)
+                    .padding(3.3)
                     .layoutPriority(100)
                     .onTapGesture {
-                        game.choose(card)
+                    game.choose(card)
+                        }
+                })
+
+                    Button {
+                        game.newGame()
+                    } label: {
+                        Image(systemName: "gamecontroller").font(.largeTitle)
                     }
-            })
-//                            }
-//                        }
-//                }
-//                Button {
-//                    game.newGame()
-//                } label: {
-//                    Image(systemName: "gamecontroller").font(.largeTitle)
-//                }
-//                }
-//            .foregroundColor(game.colorOfTheme)
-//            .padding(.horizontal)
-//        }
+                    
+                .foregroundColor(game.colorOfTheme)
+                .padding(.horizontal)
+        }
 //    }
 }
     
@@ -66,7 +60,7 @@ struct CardView: View, Animatable {
                 }
             }
         })
-        .edgesIgnoringSafeArea([.top])
+//        .edgesIgnoringSafeArea([])
     }
     
     private func font(in size: CGSize) -> Font {
