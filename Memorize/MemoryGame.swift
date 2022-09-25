@@ -12,7 +12,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     
     private(set) var score = 0
-
+ 
     private var indexOfOnlyAndOnlyCardFaceUp: Int? {
         get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
         set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue!) } }
@@ -79,7 +79,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 }
 
 // MARK: -Extention(s)
-extension Array {
+extension Array where Element: Hashable  {
     var oneAndOnly: Element? {
         if self.count  == 1 {
             return self.first
@@ -88,4 +88,5 @@ extension Array {
         }
     }
 }
+
 
