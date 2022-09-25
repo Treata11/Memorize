@@ -42,7 +42,8 @@ struct EmojiMemoryGameView: View {
 //            .padding(.horizontal)
 //        }
 //    }
-
+}
+    
 struct CardView: View, Animatable {
     private let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
