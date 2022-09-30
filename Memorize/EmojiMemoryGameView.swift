@@ -17,6 +17,7 @@ struct EmojiMemoryGameView: View {
                 Spacer()
                 Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
             }
+            .padding()
             
             AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
                 if card.isMatched && !card.isFaceUp {
@@ -54,17 +55,10 @@ struct CardView: View, Animatable {
     var body: some View {
         GeometryReader(content: { geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius )
-                if card.isFaceUp {
-                    shape.fill(.white).blur(radius: 39)
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                    Pie(startAngel: Angle.degrees(0-90), endAngle: Angle.degrees(120-90)).padding(4.1).saturation(1.3).contrast(1.3).opacity(0.5)
                     Text(card.content).font(font(in: geometry.size))
-                } else if card.isMatched {
-                    shape.opacity(0.113)
-                } else {
-                    shape.fill()
-                }
             }
+            .cardify(isFaceUp: card.isFaceUp)
         })
 //        .edgesIgnoringSafeArea([])
     }
@@ -75,8 +69,7 @@ struct CardView: View, Animatable {
     
     struct DrawingConstants { //bogus, must be private
         static let cornerRadius: CGFloat = 11
-        static let lineWidth: CGFloat = 2.6
-        static let fontScale: CGFloat = 0.81
+        static let fontScale: CGFloat = 0.69
     }
 }
 
@@ -107,12 +100,15 @@ struct CardView: View, Animatable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        Group {
-            EmojiMemoryGameView(game: game)
-                .preferredColorScheme(.dark)
-        }
-        EmojiMemoryGameView(game: game)
-            .preferredColorScheme(.light)
+//        game.choose(game.cards.first!)
+             return EmojiMemoryGameView(game: game)
+//        Group {
+//            EmojiMemoryGameView(game: game)
+//                .preferredColorScheme(.dark)
+//        }
+//        EmojiMemoryGameView(game: game)
+//            .preferredColorScheme(.light)
+//        }
         }
     }
 }
