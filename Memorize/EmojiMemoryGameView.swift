@@ -46,26 +46,62 @@ struct EmojiMemoryGameView: View {
 }
     
 struct CardView: View, Animatable {
-    private let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
+    let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
+    
+    @State private var animatedBonusRemaining: Double = 0
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
     }
 
     var body: some View {
-        GeometryReader(content: { geometry in
+        GeometryReader { geometry in
             ZStack {
-                withAnimation {
-                    Pie(startAngle: Angle.degrees(0-90), endAngle: Angle.degrees(120-90)).padding(4.1).saturation(1.3).contrast(1.3).opacity(0.19)
+                // Group is a "bag of Lego" container
+                // it's useful for propagating view modifiers to multiple views
+                // (as we are doing below, for example, with opacity)
+                Group {
+                    // card.isConsumingBonusTime is changed by the Model quite often
+                    // it changes any time a card's isFaceUp changes (or isMatched)
+                    // so the two Pies here are swapping back and forth as isFaceUp changes
+                    // any time we are not consuming bonus time, the lower Pie appears
+                    // (it is not animated and is just showing how much time is left)
+                    // any time we ARE consuming bonus time, the upper Pie appears
+                    // and when it appears (onAppear), it starts animating its own endAngle
+                    // by first setting its animatedBonusRemaining to however much time is remaining
+                    // then animating setting that to zero inside an explicit animation
+                    // (and since this represents a change to animatedBonusRemaining, it will animate that change)
+                    // if isConsumingBonusTime changes in the middle of the animation
+                    // the top Pie below will simply be removed from the UI and the animation abandoned
+                    if card.isConsumingBonusTime {
+                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1-animatedBonusRemaining)*360-90))
+                            .onAppear {
+                                animatedBonusRemaining = card.bonusRemaining
+                                withAnimation(.linear(duration: card.bonusTimeRemaining)) {
+                                    animatedBonusRemaining = 0
+                                }
+                            }
+                    } else {
+                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1-card.bonusRemaining)*360-90))
+                    }
                 }
-                    Text(card.content)
+                    .padding(5)
+                    .opacity(0.5)
+                Text(card.content)
                     .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
-//                    .animation(Animation.easeInOut(duration: 1.3))
+                    // only view modifiers ABOVE this .animation call are animated by it
+                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                    .padding(5)
                     .font(Font.system(size: DrawingConstants.fontSize))
+                    // view modifications like this .scaleEffect are not affected by the call to .animation ABOVE it
                     .scaleEffect(scale(thatFits: geometry.size))
             }
+            // this is the same as .modifier(Cardify(isFaceUp: card.isFaceUp))
+            // it turns our ZStack with a Pie and a Text in it into a "card" on screen
+            // it does this by just returning its own ZStack with RoundedRectangles and such in it
+            // see Cardify.swift
             .cardify(isFaceUp: card.isFaceUp)
-        })
+        }
 //        .edgesIgnoringSafeArea([])
     }
     
