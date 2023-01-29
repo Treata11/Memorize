@@ -55,11 +55,13 @@ struct CardView: View, Animatable {
     var body: some View {
         GeometryReader(content: { geometry in
             ZStack {
+                withAnimation {
                     Pie(startAngel: Angle.degrees(0-90), endAngle: Angle.degrees(120-90)).padding(4.1).saturation(1.3).contrast(1.3).opacity(0.19)
+                }
                     Text(card.content)
                     .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
-                    .animation(Animation.easeInOut(duration: 1.3))
-                    .font(Font.system(size: DrawingConstants.fontSize))  
+//                    .animation(Animation.easeInOut(duration: 1.3))
+                    .font(Font.system(size: DrawingConstants.fontSize))
                     .scaleEffect(scale(thatFits: geometry.size))
             }
             .cardify(isFaceUp: card.isFaceUp)
@@ -77,28 +79,15 @@ struct CardView: View, Animatable {
         static let fontSize: CGFloat = 29
     }
 }
-
-
-
-           
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
     
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 

@@ -79,6 +79,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 }
 
 // MARK: -Extention(s)
+
 extension Array where Element: Hashable  {
     var oneAndOnly: Element? {
         if self.count  == 1 {

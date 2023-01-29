@@ -7,10 +7,22 @@
 
 import SwiftUI
 
-struct Pie: Shape {
-    var startAngel: Angle   //
-    var endAngle: Angle     // are vars for animation purposes
-    var clockwise: Bool = false     //is var to not get initialized
+struct Pie: InsettableShape {
+    var insetAmount = 0.0
+    
+    var startAngel: Angle
+    var animatableDataStartPoint: Angle {
+        get { startAngel }
+        set { startAngel = newValue}
+    }
+    
+    var endAngle: Angle
+    var animatableDataEndPoint: Angle {
+        get { endAngle }
+        set { endAngle = newValue }
+    }
+    
+    var clockwise = false     // has value for not getting initialized only
     
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
@@ -33,8 +45,12 @@ struct Pie: Shape {
         )
         p.addLine(to: center)
         
-        
         return p
     }
-     
+    
+    func inset(by amount: CGFloat) -> some InsettableShape {
+        var line = self
+        line.insetAmount += amount
+        return line
+    }
 }
