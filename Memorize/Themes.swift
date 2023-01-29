@@ -37,8 +37,6 @@ struct Theme {
 //        case Food(Emojis: [String], numberOfPairsOfCards: UInt8, Color: String)
 //
 
-
-
 //MARK: - Randomizer
 
 //    class LinearCongruentialGenerator  {
