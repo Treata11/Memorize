@@ -50,8 +50,7 @@ struct Pie: Shape, InsettableShape {
         p.addLine(to: center)
         return p
     }
-
-    
+ 
     func inset(by amount: CGFloat) -> some InsettableShape {
         var line = self
         line.insetAmount += amount
