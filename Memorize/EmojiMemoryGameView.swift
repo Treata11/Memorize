@@ -56,7 +56,7 @@ struct CardView: View, Animatable {
         GeometryReader(content: { geometry in
             ZStack {
                 withAnimation {
-                    Pie(startAngel: Angle.degrees(0-90), endAngle: Angle.degrees(120-90)).padding(4.1).saturation(1.3).contrast(1.3).opacity(0.19)
+                    Pie(startAngle: Angle.degrees(0-90), endAngle: Angle.degrees(120-90)).padding(4.1).saturation(1.3).contrast(1.3).opacity(0.19)
                 }
                     Text(card.content)
                     .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
