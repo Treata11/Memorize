@@ -20,15 +20,15 @@ struct EmojiMemoryGameView: View {
             .ignoresSafeArea()
             .padding()
             
-            AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
+            AspectVGrid(items: game.cards, aspectRatio: 1000/1618) { card in
                 if card.isMatched && !card.isFaceUp {
-                    withAnimation {
-                       RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
-//                        Color.clear
-                    }
+//                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius )
+//                        .opacity(0.113)
+                    Color.clear
                 } else {
                     CardView(card)
                         .padding(3.3)
+                        .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeIn(duration: 0.5))) 
                         .layoutPriority(100)
                         .onTapGesture {
                             withAnimation {
@@ -37,6 +37,9 @@ struct EmojiMemoryGameView: View {
                         }
                     }
                 }
+            .onAppear() {
+                // "deal" cards
+            }
             .foregroundColor(game.colorOfTheme)
 
                     Button {
@@ -147,8 +150,8 @@ struct CardView: View, Animatable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        game.choose(game.cards.first!)
-        return EmojiMemoryGameView(game: game).preferredColorScheme(.dark)
+//        game.choose(game.cards.first!)
+        return EmojiMemoryGameView(game: game)
 //        Group {
 //            EmojiMemoryGameView(game: game)
 //                .preferredColorScheme(.dark)
