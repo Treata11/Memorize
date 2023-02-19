@@ -7,10 +7,23 @@
 
 import SwiftUI
 
-struct UtilityViews: View {
+//extension View {
+//    struct AnimatableText: View {
+//        let rotationAngle: Angle
+//
+//        var body: some View {
+//            Text.self
+//                .rotationEffect(rotationAngle, anchor: .center)
+//        }
+//    }
+//}
+
+struct AnimatableText: View {
+    let text: Text
+    let angle: Angle
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        text
+            .rotationEffect(angle, anchor: .center)
     }
 }
-
-

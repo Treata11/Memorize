@@ -51,7 +51,7 @@ struct CardView: View, Animatable {
     let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
-    @State private var rotationAngle: Double = 360
+    @State private var rotationAngle: Angle = .degrees(360)
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
@@ -90,16 +90,18 @@ struct CardView: View, Animatable {
                 }
                     .padding(5)
                     .opacity(0.5)
-                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-                    Text(card.content)
-                        .rotationEffect(Angle.degrees(card.isMatched ? rotationAngle : 0))
-//                        .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
-                }
-                    // only view modifiers ABOVE this .animation call are animated by it
-//                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                
+                AnimatableText(
+                    text: Text(card.content),
+                    angle: card.isMatched ? rotationAngle : .degrees(0)
+                )
+                .onAppear {
+                    withAnimation(.linear(duration: 15).repeatForever(autoreverses: false)) {
+                            rotationAngle += .degrees(360)
+                        }
+                    }
                     .padding(5)
                     .font(Font.system(size: DrawingConstants.fontSize))
-                    // view modifications like this .scaleEffect are not affected by the call to .animation ABOVE it
                     .scaleEffect(scale(thatFits: geometry.size))
             }
             // this is the same as .modifier(Cardify(isFaceUp: card.isFaceUp))
@@ -111,6 +113,10 @@ struct CardView: View, Animatable {
 //        .edgesIgnoringSafeArea([])
     }
     
+    private func animateTexts(text: String, angle: Angle) -> some View {
+        Text(text)
+            .rotationEffect(rotationAngle)
+    }
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
     }
