@@ -19,11 +19,11 @@ import SwiftUI
 //}
 
 struct AnimatableText: View {
-    let text: Text
+    let text: String
     let angle: Angle
     
     var body: some View {
-        text
+        Text(text)
             .rotationEffect(angle, anchor: .center)
     }
 }

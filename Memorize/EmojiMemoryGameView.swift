@@ -47,6 +47,21 @@ struct EmojiMemoryGameView: View {
 //    }
 }
     
+struct TextToAnimate: View {
+    let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
+    let angle: Angle
+    
+//    init(_ card: EmojiMemoryGame.Card, angle: Angle) {
+//        self.card = card
+//        self.angle = angle
+//    }
+    
+    var body: some View {
+        Text(card.content)
+            .rotationEffect(angle)
+    }
+}
+    
 struct CardView: View, Animatable {
     let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
@@ -90,19 +105,21 @@ struct CardView: View, Animatable {
                 }
                     .padding(5)
                     .opacity(0.5)
-                
+
                 AnimatableText(
-                    text: Text(card.content),
-                    angle: card.isMatched ? rotationAngle : .degrees(0)
+                    text: card.content,
+                    angle: rotationAngle
                 )
-                .onAppear {
-                    withAnimation(.linear(duration: 15).repeatForever(autoreverses: false)) {
+                .onDisappear() {
+                    if card.isMatched && card.isFaceUp {
+                        withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
                             rotationAngle += .degrees(360)
                         }
                     }
-                    .padding(5)
-                    .font(Font.system(size: DrawingConstants.fontSize))
-                    .scaleEffect(scale(thatFits: geometry.size))
+                }
+                .padding(5)
+                .font(Font.system(size: DrawingConstants.fontSize))
+                .scaleEffect(scale(thatFits: geometry.size))
             }
             // this is the same as .modifier(Cardify(isFaceUp: card.isFaceUp))
             // it turns our ZStack with a Pie and a Text in it into a "card" on screen
