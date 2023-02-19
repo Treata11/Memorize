@@ -10,6 +10,16 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     
+    @State private var dealt = Set<UInt8>()
+    
+    func deal(_ card: EmojiMemoryGame.Card) {
+        dealt.insert(card.id)
+    }
+    
+    func isUndealt(_ card: EmojiMemoryGame.Card) -> Bool {
+        return !dealt.contains(card.id)
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -19,16 +29,16 @@ struct EmojiMemoryGameView: View {
             }
             .ignoresSafeArea()
             .padding()
-            
+
             AspectVGrid(items: game.cards, aspectRatio: 1000/1618) { card in
-                if card.isMatched && !card.isFaceUp {
+                if isUndealt(card) || (card.isMatched && !card.isFaceUp) {
 //                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius )
 //                        .opacity(0.113)
                     Color.clear
                 } else {
                     CardView(card)
                         .padding(3.3)
-                        .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeIn(duration: 0.5))) 
+                        .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeIn(duration: 0.5)))
                         .layoutPriority(100)
                         .onTapGesture {
                             withAnimation {
@@ -39,6 +49,11 @@ struct EmojiMemoryGameView: View {
                 }
             .onAppear() {
                 // "deal" cards
+                withAnimation {
+                    for card in game.cards {
+                        deal(card)
+                    }
+                }
             }
             .foregroundColor(game.colorOfTheme)
 
@@ -50,6 +65,7 @@ struct EmojiMemoryGameView: View {
                     
                 .foregroundColor(game.colorOfTheme)
                 .padding(.horizontal)
+                
         }
 //    }
 }
