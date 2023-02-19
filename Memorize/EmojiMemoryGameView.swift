@@ -99,7 +99,7 @@ struct CardView: View, Animatable {
                 // A whole new approach to make onDisappear{withAnimation}
                 // work is required; have to write a func to actually
                 // remove index of matched cards to remove them from UI
-                // and make the transition go ...
+                //  
 ///                AnimatableText(
 ///                    text: card.content,
 ///                    angle: rotationAngle
