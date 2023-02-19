@@ -47,21 +47,6 @@ struct EmojiMemoryGameView: View {
 //    }
 }
     
-struct TextToAnimate: View {
-    let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
-    let angle: Angle
-    
-//    init(_ card: EmojiMemoryGame.Card, angle: Angle) {
-//        self.card = card
-//        self.angle = angle
-//    }
-    
-    var body: some View {
-        Text(card.content)
-            .rotationEffect(angle)
-    }
-}
-    
 struct CardView: View, Animatable {
     let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
@@ -105,18 +90,28 @@ struct CardView: View, Animatable {
                 }
                     .padding(5)
                     .opacity(0.5)
-
-                AnimatableText(
-                    text: card.content,
-                    angle: rotationAngle
-                )
-                .onDisappear() {
-                    if card.isMatched && card.isFaceUp {
-                        withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-                            rotationAngle += .degrees(360)
-                        }
-                    }
-                }
+                Text(card.content)
+                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                .animation(.linear(duration: 1).repeatForever(autoreverses: false))
+                
+                // MARK: -ToDo
+                
+                // A whole new approach to make onDisappear{withAnimation}
+                // work is required; have to write a func to actually
+                // remove index of matched cards to remove them from UI
+                // and make the transition go ...
+///                AnimatableText(
+///                    text: card.content,
+///                    angle: rotationAngle
+///                )
+///                .onDisappear() {
+///                    if card.isMatched && card.isFaceUp {
+///                        withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+///                            rotationAngle += .degrees(360)
+///                        }
+///                    }
+///                }
+                // MARK: -
                 .padding(5)
                 .font(Font.system(size: DrawingConstants.fontSize))
                 .scaleEffect(scale(thatFits: geometry.size))

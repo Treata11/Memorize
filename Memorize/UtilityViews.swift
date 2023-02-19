@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-//extension View {
-//    struct AnimatableText: View {
-//        let rotationAngle: Angle
-//
-//        var body: some View {
-//            Text.self
-//                .rotationEffect(rotationAngle, anchor: .center)
-//        }
-//    }
-//}
-
 struct AnimatableText: View {
     let text: String
     let angle: Angle

@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
 //    private(set) var  cards: MemoryGame<String> //or we can omit <set>
