@@ -17,11 +17,13 @@ struct EmojiMemoryGameView: View {
                 Spacer()
                 Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
             }
+            .ignoresSafeArea()
             .padding()
             
             AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
                 if card.isMatched && !card.isFaceUp {
-                    RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
+//                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
+                    Color.clear
                 } else {
                     CardView(card)
                         .padding(3.3)
@@ -49,6 +51,7 @@ struct CardView: View, Animatable {
     let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
+    @State private var rotationAngle: Angle = .degrees(360)
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
@@ -88,13 +91,30 @@ struct CardView: View, Animatable {
                     .padding(5)
                     .opacity(0.5)
                 Text(card.content)
-                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
-                    // only view modifiers ABOVE this .animation call are animated by it
-                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
-                    .padding(5)
-                    .font(Font.system(size: DrawingConstants.fontSize))
-                    // view modifications like this .scaleEffect are not affected by the call to .animation ABOVE it
-                    .scaleEffect(scale(thatFits: geometry.size))
+                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                .animation(.linear(duration: 1).repeatForever(autoreverses: false))
+                
+                // MARK: -ToDo
+                
+                // A whole new approach to make onDisappear{withAnimation}
+                // work is required; have to write a func to actually
+                // remove index of matched cards to remove them from UI
+                // and make the transition go ...
+///                AnimatableText(
+///                    text: card.content,
+///                    angle: rotationAngle
+///                )
+///                .onDisappear() {
+///                    if card.isMatched && card.isFaceUp {
+///                        withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+///                            rotationAngle += .degrees(360)
+///                        }
+///                    }
+///                }
+                // MARK: -
+                .padding(5)
+                .font(Font.system(size: DrawingConstants.fontSize))
+                .scaleEffect(scale(thatFits: geometry.size))
             }
             // this is the same as .modifier(Cardify(isFaceUp: card.isFaceUp))
             // it turns our ZStack with a Pie and a Text in it into a "card" on screen
@@ -105,6 +125,10 @@ struct CardView: View, Animatable {
 //        .edgesIgnoringSafeArea([])
     }
     
+    private func animateTexts(text: String, angle: Angle) -> some View {
+        Text(text)
+            .rotationEffect(rotationAngle)
+    }
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
     }
@@ -115,17 +139,6 @@ struct CardView: View, Animatable {
         static let fontSize: CGFloat = 29
     }
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

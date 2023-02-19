@@ -24,6 +24,7 @@ struct Cardify: ViewModifier {
 
         }
     }
+    
     private struct DrawingConstants {
         static let cornerRadius: CGFloat = 11
         static let lineWidth: CGFloat = 2.6

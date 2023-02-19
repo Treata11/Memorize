@@ -50,10 +50,20 @@ struct Pie: Shape, InsettableShape {
         p.addLine(to: center)
         return p
     }
+<<<<<<< HEAD
+
+=======
  
+>>>>>>> 31559a2a498ba31bd44d18cf3410e7123688bb8c
     func inset(by amount: CGFloat) -> some InsettableShape {
         var line = self
         line.insetAmount += amount
         return line
+    }
+}
+
+struct MyPreviewProvider_Previews: PreviewProvider {
+    static var previews: some View {
+        Pie(startAngle: Angle(radians: 0), endAngle: Angle(radians: 6), clockwise: false)
     }
 }

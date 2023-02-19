@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		611C315C29A23E940026A722 /* UtilityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C315B29A23E940026A722 /* UtilityViews.swift */; };
 		6136476128E0E33300194EB0 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6136476028E0E33300194EB0 /* Pie.swift */; };
 		61751B7C2876172E002EAE09 /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61751B7B2876172E002EAE09 /* MemorizeApp.swift */; };
 		61751B7E2876172E002EAE09 /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61751B7D2876172E002EAE09 /* EmojiMemoryGameView.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		611C315B29A23E940026A722 /* UtilityViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViews.swift; sourceTree = "<group>"; };
 		6136476028E0E33300194EB0 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		61751B782876172E002EAE09 /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61751B7B2876172E002EAE09 /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				61D14BAB2889861D00E096B1 /* EmojiMemoryGame.swift */,
 				61751B7B2876172E002EAE09 /* MemorizeApp.swift */,
 				61751B7D2876172E002EAE09 /* EmojiMemoryGameView.swift */,
+				611C315B29A23E940026A722 /* UtilityViews.swift */,
 				617CBBED28E0885000F47DFA /* AspectVGrid.swift */,
 				61751B7F28761731002EAE09 /* Assets.xcassets */,
 				61751B8128761731002EAE09 /* Preview Content */,
@@ -157,6 +160,7 @@
 			files = (
 				61751B7E2876172E002EAE09 /* EmojiMemoryGameView.swift in Sources */,
 				61D14BAA288981F200E096B1 /* MemoryGame.swift in Sources */,
+				611C315C29A23E940026A722 /* UtilityViews.swift in Sources */,
 				617CBBEE28E0885000F47DFA /* AspectVGrid.swift in Sources */,
 				61F85D3428DC3A90007F2287 /* Themes.swift in Sources */,
 				6136476128E0E33300194EB0 /* Pie.swift in Sources */,
