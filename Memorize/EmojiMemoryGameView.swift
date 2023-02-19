@@ -21,7 +21,7 @@ struct EmojiMemoryGameView: View {
     }
     
     var gameBody: some View {
-        AspectVGrid(items: game.cards, aspectRatio: 1000/1618) { card in
+        AspectVGrid(items: game.cards, aspectRatio: DrawingConstants.aspectRatio) { card in
             if isUndealt(card) || (card.isMatched && !card.isFaceUp) {
 //                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius )
 //                        .opacity(0.113)
@@ -38,12 +38,12 @@ struct EmojiMemoryGameView: View {
                     }
                 }
             }
-        .onAppear() {
-            // "deal" cards
-            withAnimation {
-                for card in game.cards {
-                    deal(card)
-                }
+            .onAppear() {
+                // "deal" cards
+                withAnimation {
+                    for card in game.cards {
+                        deal(card)
+                    }
             }
         }
         .foregroundColor(game.colorOfTheme)
@@ -53,8 +53,11 @@ struct EmojiMemoryGameView: View {
         ZStack {
             ForEach(game.cards.filter(isUndealt)) { card in
                 CardView(card)
+                    .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .scale))
             }
         }
+        .frame(width: DrawingConstants.undealtWidth, height: DrawingConstants.undealtHeight)
+        .foregroundColor(game.colorOfTheme)
     }
     
     var body: some View {
@@ -69,15 +72,14 @@ struct EmojiMemoryGameView: View {
             
             gameBody
             deckBody
-            
-                    Button {
-                        game.newGame()
-                    } label: {
-                        Image(systemName: "gamecontroller").font(.largeTitle)
-                    }
-                    
-                .foregroundColor(game.colorOfTheme)
-                .padding(.horizontal)
+        
+            Button {
+                game.newGame()
+            } label: {
+                Image(systemName: "gamecontroller").font(.largeTitle)
+            }
+            .foregroundColor(game.colorOfTheme)
+            .padding(.horizontal)
         }
 }
     
@@ -166,12 +168,15 @@ struct CardView: View, Animatable {
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
     }
-     
-    struct DrawingConstants { //bogus, must be private
-        static let cornerRadius: CGFloat = 11
-        static let fontScale: CGFloat = 0.69
-        static let fontSize: CGFloat = 29
-    }
+}
+    
+private struct DrawingConstants {
+    static let aspectRatio: CGFloat = 1000/1618
+    static let cornerRadius: CGFloat = 11
+    static let fontScale: CGFloat = 0.69
+    static let fontSize: CGFloat = 29
+    static let undealtHeight: CGFloat = 90
+    static let undealtWidth = undealtHeight * aspectRatio
 }
 
 struct ContentView_Previews: PreviewProvider {
