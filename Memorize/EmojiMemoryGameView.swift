@@ -20,6 +20,43 @@ struct EmojiMemoryGameView: View {
         return !dealt.contains(card.id)
     }
     
+    var gameBody: some View {
+        AspectVGrid(items: game.cards, aspectRatio: 1000/1618) { card in
+            if isUndealt(card) || (card.isMatched && !card.isFaceUp) {
+//                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius )
+//                        .opacity(0.113)
+                Color.clear
+            } else {
+                CardView(card)
+                    .padding(3.3)
+                    .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeIn(duration: 0.5)))
+                    .layoutPriority(100)
+                    .onTapGesture {
+                        withAnimation {
+                            game.choose(card)
+                        }
+                    }
+                }
+            }
+        .onAppear() {
+            // "deal" cards
+            withAnimation {
+                for card in game.cards {
+                    deal(card)
+                }
+            }
+        }
+        .foregroundColor(game.colorOfTheme)
+    }
+    
+    var deckBody: some View {
+        ZStack {
+            ForEach(game.cards.filter(isUndealt)) { card in
+                CardView(card)
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -29,34 +66,10 @@ struct EmojiMemoryGameView: View {
             }
             .ignoresSafeArea()
             .padding()
-
-            AspectVGrid(items: game.cards, aspectRatio: 1000/1618) { card in
-                if isUndealt(card) || (card.isMatched && !card.isFaceUp) {
-//                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius )
-//                        .opacity(0.113)
-                    Color.clear
-                } else {
-                    CardView(card)
-                        .padding(3.3)
-                        .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeIn(duration: 0.5)))
-                        .layoutPriority(100)
-                        .onTapGesture {
-                            withAnimation {
-                                game.choose(card)
-                            }
-                        }
-                    }
-                }
-            .onAppear() {
-                // "deal" cards
-                withAnimation {
-                    for card in game.cards {
-                        deal(card)
-                    }
-                }
-            }
-            .foregroundColor(game.colorOfTheme)
-
+            
+            gameBody
+            deckBody
+            
                     Button {
                         game.newGame()
                     } label: {
@@ -65,9 +78,7 @@ struct EmojiMemoryGameView: View {
                     
                 .foregroundColor(game.colorOfTheme)
                 .padding(.horizontal)
-                
         }
-//    }
 }
     
 struct CardView: View, Animatable {
