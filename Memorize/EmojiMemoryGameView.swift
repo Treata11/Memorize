@@ -29,7 +29,9 @@ struct EmojiMemoryGameView: View {
                         .padding(3.3)
                         .layoutPriority(100)
                         .onTapGesture {
-                        game.choose(card)
+                            withAnimation {
+                                game.choose(card)
+                            }
                         }
                     }
                 }

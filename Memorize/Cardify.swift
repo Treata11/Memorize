@@ -12,9 +12,10 @@ struct Cardify: ViewModifier {
     
     func body(content: Content) -> some View {
         ZStack {
-            let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius )
+            let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
             if isFaceUp {
                 shape.fill(.white).blur(radius: 44)
+                    .clipShape(RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius))
                 shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
             } else {
                 shape.fill()
