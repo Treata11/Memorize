@@ -21,7 +21,8 @@ struct EmojiMemoryGameView: View {
             
             AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
                 if card.isMatched && !card.isFaceUp {
-                    RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
+//                   RoundedRectangle(cornerRadius: CardView.DrawingConstants.cornerRadius ).opacity(0.113)
+                    Color.clear
                 } else {
                     CardView(card)
                         .padding(3.3)

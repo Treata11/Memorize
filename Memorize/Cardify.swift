@@ -23,6 +23,7 @@ struct Cardify: ViewModifier {
                 .opacity(isFaceUp ? 1 : 0)
         }
     }
+    
     private struct DrawingConstants {
         static let cornerRadius: CGFloat = 11
         static let lineWidth: CGFloat = 2.6
