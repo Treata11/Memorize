@@ -17,6 +17,7 @@ struct EmojiMemoryGameView: View {
                 Spacer()
                 Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
             }
+            .ignoresSafeArea()
             .padding()
             
             AspectVGrid(items: game.cards, aspectRatio: 1000/1618) {card in
@@ -50,6 +51,7 @@ struct CardView: View, Animatable {
     let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
+    @State private var rotationAngle: Double = 360
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
@@ -88,10 +90,13 @@ struct CardView: View, Animatable {
                 }
                     .padding(5)
                     .opacity(0.5)
-                Text(card.content)
-                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+                    Text(card.content)
+                        .rotationEffect(Angle.degrees(card.isMatched ? rotationAngle : 0))
+//                        .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                }
                     // only view modifiers ABOVE this .animation call are animated by it
-                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+//                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
                     .padding(5)
                     .font(Font.system(size: DrawingConstants.fontSize))
                     // view modifications like this .scaleEffect are not affected by the call to .animation ABOVE it
@@ -116,17 +121,6 @@ struct CardView: View, Animatable {
         static let fontSize: CGFloat = 29
     }
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
