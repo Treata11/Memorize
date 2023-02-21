@@ -12,12 +12,22 @@ struct EmojiMemoryGameView: View {
     
     @State private var dealt = Set<UInt8>()
     
-    func deal(_ card: EmojiMemoryGame.Card) {
+    @Namespace private var dealingNamespace 
+    
+    private func deal(_ card: EmojiMemoryGame.Card) {
         dealt.insert(card.id)
     }
     
-    func isUndealt(_ card: EmojiMemoryGame.Card) -> Bool {
+    private func isUndealt(_ card: EmojiMemoryGame.Card) -> Bool {
         return !dealt.contains(card.id)
+    }
+    
+    private func dealAnimation(for card: EmojiMemoryGame.Card) -> Animation {
+        var delay = 0.0
+        if let index = game.cards.firstIndex(where: { $0.id == card.id }) {
+            delay = Double(index) * (DrawingConstants.totalDealDuration / Double(game.cards.count))
+        }
+        return Animation.easeInOut(duration: DrawingConstants.dealDuration).delay(delay)
     }
     
     var gameBody: some View {
@@ -28,9 +38,12 @@ struct EmojiMemoryGameView: View {
                 Color.clear
             } else {
                 CardView(card)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .padding(3.3)
-                    .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeIn(duration: 0.5)))
-                    .layoutPriority(100)
+                    .transition(AnyTransition.asymmetric(insertion: .identity, removal: .scale))
+                // .identity means don't do any animation for this transition
+                // except the matchedGeometryEffect
+//                    .layoutPriority(100)
                     .onTapGesture {
                         withAnimation {
                             game.choose(card)
@@ -38,14 +51,6 @@ struct EmojiMemoryGameView: View {
                     }
                 }
             }
-            .onAppear() {
-                // "deal" cards
-                withAnimation {
-                    for card in game.cards {
-                        deal(card)
-                    }
-            }
-        }
         .foregroundColor(game.colorOfTheme)
     }
     
@@ -53,11 +58,19 @@ struct EmojiMemoryGameView: View {
         ZStack {
             ForEach(game.cards.filter(isUndealt)) { card in
                 CardView(card)
-                    .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .scale))
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .identity))
             }
         }
         .frame(width: DrawingConstants.undealtWidth, height: DrawingConstants.undealtHeight)
         .foregroundColor(game.colorOfTheme)
+        .onTapGesture() {
+            for card in game.cards {
+                withAnimation(dealAnimation(for: card)) {
+                    deal(card)
+                }
+            }
+         }
     }
     
     var newGameButton: some View {
@@ -184,6 +197,8 @@ private struct DrawingConstants {
     static let fontSize: CGFloat = 29
     static let undealtHeight: CGFloat = 90
     static let undealtWidth = undealtHeight * aspectRatio
+    static let dealDuration = 5.0
+    static let totalDealDuration = 13.0
 }
 
 struct ContentView_Previews: PreviewProvider {
