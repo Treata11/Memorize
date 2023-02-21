@@ -60,6 +60,16 @@ struct EmojiMemoryGameView: View {
         .foregroundColor(game.colorOfTheme)
     }
     
+    var newGameButton: some View {
+        Button {
+            game.newGame()
+        } label: {
+            Image(systemName: "gamecontroller").font(.largeTitle)
+        }
+        .foregroundColor(game.colorOfTheme)
+//        .padding(.horizontal)
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -71,15 +81,12 @@ struct EmojiMemoryGameView: View {
             .padding()
             
             gameBody
-            deckBody
-        
-            Button {
-                game.newGame()
-            } label: {
-                Image(systemName: "gamecontroller").font(.largeTitle)
+            HStack {
+                deckBody
+                Spacer()
+                newGameButton
             }
-            .foregroundColor(game.colorOfTheme)
-            .padding(.horizontal)
+            .padding()
         }
 }
     
@@ -184,6 +191,7 @@ struct ContentView_Previews: PreviewProvider {
         let game = EmojiMemoryGame()
 //        game.choose(game.cards.first!)
         return EmojiMemoryGameView(game: game)
+            .previewDevice("iPhone 14 Pro Max")
 //        Group {
 //            EmojiMemoryGameView(game: game)
 //                .preferredColorScheme(.dark)
