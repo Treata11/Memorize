@@ -106,25 +106,26 @@ struct EmojiMemoryGameView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
-                Spacer()
-                Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
+        ZStack(alignment: .bottom ) {
+            VStack {
+                HStack {
+                    Text(game.nameOfTheme).foregroundColor(game.colorOfTheme)
+                    Spacer()
+                    Text("Points: \(game.score)").foregroundColor(game.colorOfTheme).colorInvert()
+                }
+                .ignoresSafeArea()
+                .padding()
+                
+                gameBody
+                HStack {
+                    shuffle
+                    Spacer()
+                    restart
+                    // newGameButton
+                }
+                .padding(.horizontal)
             }
-            .ignoresSafeArea()
-            .padding()
-            
-            gameBody
-            HStack {
-                shuffle
-                Spacer()
-                deckBody
-                Spacer()
-                restart
-                // newGameButton
-            }
-            .padding(.horizontal)
+            deckBody
         }
 }
     
