@@ -79,6 +79,14 @@ struct EmojiMemoryGameView: View {
          }
     }
     
+    var shuffle: some View {
+        Button("Shuffle") {
+            withAnimation() {
+                game.shuffle()
+            }
+        }
+    }
+    
     var newGameButton: some View {
         Button {
             game.newGame()
@@ -101,6 +109,8 @@ struct EmojiMemoryGameView: View {
             
             gameBody
             HStack {
+                shuffle
+                Spacer()
                 deckBody
                 Spacer()
                 newGameButton

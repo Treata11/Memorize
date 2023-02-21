@@ -45,6 +45,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    mutating func shuffle() {
+        cards.shuffle()
+    }
+    
     init(numberOfPairsOfCards: Int, creatCardContent: (Int) -> CardContent) {
         cards = []
         
@@ -55,7 +59,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content,
                 id: UInt8(pairIndex*2+1)))
             }
-        cards.shuffle()
+        
+        shuffle()
         }
     
     //PropertyObserver
