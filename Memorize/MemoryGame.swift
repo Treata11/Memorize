@@ -45,6 +45,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    mutating func shuffle() {
+        cards.shuffle()
+    }
+    
     init(numberOfPairsOfCards: Int, creatCardContent: (Int) -> CardContent) {
         cards = []
         
@@ -55,7 +59,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content,
                 id: UInt8(pairIndex*2+1)))
             }
-        cards.shuffle()
+        
+        shuffle()
         }
     
     //PropertyObserver
@@ -70,8 +75,20 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
 //    }
     
     struct Card: Identifiable, Equatable {
-        var isFaceUp = false
-        var isMatched = false
+        var isFaceUp = false {
+            didSet {
+                if isFaceUp {
+                    startUsingBonusTime()
+                } else {
+                    stopUsingBonusTime()
+                }
+            }
+        }
+        var isMatched = false {
+            didSet {
+                stopUsingBonusTime()
+            }
+        }
         var hasAlreadyBeenSeen = false
         let content: CardContent
         let id: UInt8

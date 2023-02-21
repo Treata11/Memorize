@@ -25,7 +25,8 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
 
-    @Published private var model: MemoryGame<String>
+//    @Published private var model: MemoryGame<String>
+    @Published private var model = createMemoryGame(theme: themes.randomElement() ?? themes[0])
     
     private var theme: Theme
     
@@ -100,10 +101,19 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
     
+    func shuffle() {
+        model.shuffle()
+    }
+    
     func newGame() {
         theme = EmojiMemoryGame.themes.randomElement()! //Required Task 11
         theme.emojis.shuffle()
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
+    
+    func restart() {
+        let newTheme = EmojiMemoryGame.themes.randomElement()
+        model = EmojiMemoryGame.createMemoryGame(theme: newTheme!)
     }
 }
 
