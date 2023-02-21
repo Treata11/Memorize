@@ -87,6 +87,15 @@ struct EmojiMemoryGameView: View {
         }
     }
     
+    var restart: some View {
+        Button("Restart") {
+            withAnimation {
+                dealt = []
+                game.restart()
+            }
+        }
+    }
+    
     var newGameButton: some View {
         Button {
             game.newGame()
@@ -94,7 +103,6 @@ struct EmojiMemoryGameView: View {
             Image(systemName: "gamecontroller").font(.largeTitle)
         }
         .foregroundColor(game.colorOfTheme)
-//        .padding(.horizontal)
     }
     
     var body: some View {
@@ -113,9 +121,10 @@ struct EmojiMemoryGameView: View {
                 Spacer()
                 deckBody
                 Spacer()
-                newGameButton
+                restart
+                // newGameButton
             }
-            .padding()
+            .padding(.horizontal)
         }
 }
     
