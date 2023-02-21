@@ -30,6 +30,10 @@ struct EmojiMemoryGameView: View {
         return Animation.easeInOut(duration: DrawingConstants.dealDuration).delay(delay)
     }
     
+    private func zIndex(of card: EmojiMemoryGame.Card) -> Double {
+        -Double(game.cards.firstIndex(where: { $0.id == card.id }) ?? 0)
+    }
+    
     var gameBody: some View {
         AspectVGrid(items: game.cards, aspectRatio: DrawingConstants.aspectRatio) { card in
             if isUndealt(card) || (card.isMatched && !card.isFaceUp) {
@@ -40,7 +44,8 @@ struct EmojiMemoryGameView: View {
                 CardView(card)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .padding(3.3)
-                    .transition(AnyTransition.asymmetric(insertion: .identity, removal: .scale))
+                    .transition(AnyTransition.asymmetric(insertion: .identity, removal: .scale).animation(.easeInOut(duration: DrawingConstants.dealDuration)))
+                    .zIndex(zIndex(of: card))
                 // .identity means don't do any animation for this transition
                 // except the matchedGeometryEffect
 //                    .layoutPriority(100)
@@ -59,12 +64,13 @@ struct EmojiMemoryGameView: View {
             ForEach(game.cards.filter(isUndealt)) { card in
                 CardView(card)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
-                    .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .identity))
+                    .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .identity).animation(.easeInOut(duration: DrawingConstants.dealDuration)))
+                    .zIndex(zIndex(of: card))
             }
         }
         .frame(width: DrawingConstants.undealtWidth, height: DrawingConstants.undealtHeight)
         .foregroundColor(game.colorOfTheme)
-        .onTapGesture() {
+        .onTapGesture {
             for card in game.cards {
                 withAnimation(dealAnimation(for: card)) {
                     deal(card)
