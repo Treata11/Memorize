@@ -133,7 +133,6 @@ struct CardView: View, Animatable {
     let card: EmojiMemoryGame.Card  //MemoryGame<String>.Card
     
     @State private var animatedBonusRemaining: Double = 0
-    @State private var rotationAngle: Angle = .degrees(360)
     
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
@@ -174,26 +173,7 @@ struct CardView: View, Animatable {
                     .opacity(0.5)
                 Text(card.content)
                     .rotationEffect(.degrees(card.isMatched ? 360 : 0))
-                .animation(.linear(duration: 1).repeatForever(autoreverses: false))
-                
-                // MARK: -ToDo
-                
-                // A whole new approach to make onDisappear{withAnimation}
-                // work is required; have to write a func to actually
-                // remove index of matched cards to remove them from UI
-                //  
-///                AnimatableText(
-///                    text: card.content,
-///                    angle: rotationAngle
-///                )
-///                .onDisappear() {
-///                    if card.isMatched && card.isFaceUp {
-///                        withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-///                            rotationAngle += .degrees(360)
-///                        }
-///                    }
-///                }
-                // MARK: -
+                    .animation(.linear(duration: 1.5).repeatForever(autoreverses: false), value: card.content)
                 .padding(5)
                 .font(Font.system(size: DrawingConstants.fontSize))
                 .scaleEffect(scale(thatFits: geometry.size))
@@ -205,11 +185,6 @@ struct CardView: View, Animatable {
             .cardify(isFaceUp: card.isFaceUp)
         }
 //        .edgesIgnoringSafeArea([])
-    }
-    
-    private func animateTexts(text: String, angle: Angle) -> some View {
-        Text(text)
-            .rotationEffect(rotationAngle)
     }
     private func scale(thatFits size: CGSize) -> CGFloat {
         min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
@@ -223,8 +198,8 @@ private struct DrawingConstants {
     static let fontSize: CGFloat = 29
     static let undealtHeight: CGFloat = 90
     static let undealtWidth = undealtHeight * aspectRatio
-    static let dealDuration = 5.0
-    static let totalDealDuration = 13.0
+    static let dealDuration = 0.5
+    static let totalDealDuration = 5.0
 }
 
 struct ContentView_Previews: PreviewProvider {
