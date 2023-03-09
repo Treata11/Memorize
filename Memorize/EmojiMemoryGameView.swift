@@ -135,8 +135,6 @@ struct EmojiMemoryGameView: View {
     
     var shuffle: some View {
         Button("Shuffle") {
-            // animated user Intent function call
-            // TODO: YOU MUST ADD THIS INTENT FUNC TO YOUR VIEWMODEL
             withAnimation {
                 game.shuffle()
             }
@@ -145,9 +143,6 @@ struct EmojiMemoryGameView: View {
     
     var restart: some View {
         Button("Restart") {
-            // animated user Intent function call
-            // and, at the same time, resetting our local "dealing" private State
-            // TODO: YOU MUST ADD THIS INTENT FUNC TO YOUR VIEWMODEL
             withAnimation {
                 dealt = []
                 game.restart()
