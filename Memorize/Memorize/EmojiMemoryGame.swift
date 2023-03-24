@@ -8,7 +8,19 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    @Published private var model: MemoryGame<String> = createTheme(theme: themes.randomElement() ?? themes[0])
+    @Published private var model: MemoryGame<String> = createTheme(theme: randomTheme)
+    
+    static var randomTheme: Theme {
+        EmojiMemoryGame.themes.randomElement() ?? EmojiMemoryGame.themes[2]
+    }
+    
+    var nameOfTheTheme: String {
+        name(of: EmojiMemoryGame.randomTheme)
+    }
+    
+    var colorOfTheTheme: Color {
+        color(of: EmojiMemoryGame.randomTheme)
+    }
     
 //    static func createMemoryGame() -> MemoryGame<String> {
 //        let emojis: Array<String> = ["😃", "😍", "😝", "🧐", "😎", "😒", "😱", "☹️", "🥶", "😡", "😶‍🌫️", "🫥", "🤢", "💩", "🤔", "🤩", "🥳", "😜", "🤪", "😇", "🥹", "😂", "🥸", "🤯", "😳", "🫠", "😬", "😈", "🤡", "😻", "😿", "🤠", "😵‍💫"]
@@ -95,24 +107,34 @@ class EmojiMemoryGame: ObservableObject {
     
     static func createTheme(theme: Theme) -> MemoryGame<String> {
         switch theme {
-        case .animals(let identifier, let emojis, let numberOfPairsOfCards, let color):
-            let name = identifier
-            let color = color
+        case .animals(_, let emojis, let numberOfPairsOfCards, _):
             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
                 emojis.randomElement() ?? "🦁🐯🐰🐴"
             }
-        case .sports(let identifier, let emojis, let numberOfPairsOfCards, let color):
-            let name = identifier
-            let color = color
+        case .sports(_, let emojis, let numberOfPairsOfCards, _):
             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
                 emojis.randomElement() ?? "⚽️🏀🏈⚾️"
             }
-        case .faces(let identifier, let emojis, let numberOfPairsOfCards, let color):
-            let name = identifier
-            let color = color
+        case .faces(_, let emojis, let numberOfPairsOfCards, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
                 emojis.randomElement() ?? "😃😍😝🧐"
             }
+        }
+    }
+    
+    func name(of theme: Theme) -> String {
+        switch theme {
+        case .animals(let name, _, _, _): return name
+        case .faces(let name, _, _, _): return name
+        case .sports(let name, _, _, _): return name
+        }
+    }
+    
+    func color(of theme: Theme) -> Color {
+        switch theme {
+        case .animals(_, _, _, let color): return color
+        case .faces(_, _, _, let color): return color
+        case .sports(_, _, _, let color): return color
         }
     }
     
