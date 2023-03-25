@@ -185,6 +185,13 @@ class EmojiMemoryGame: ObservableObject {
         objectWillChange.send()
         model.choose(card)
     }
+    
+    func newGame() {
+        model.cards = []
+        model.score = 0
+        theme = EmojiMemoryGame.themes.randomElement()!
+        model = EmojiMemoryGame.createMemoryGame(with: theme)
+    }
 }
 
 extension Color {
