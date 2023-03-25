@@ -47,7 +47,7 @@ class EmojiMemoryGame: ObservableObject {
                 "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"
             ],
             pairsOfCards: Int.random(in: 7...11),
-            color: .cream,
+            color: .pink,
             gradient: Gradient.animalsEmojisGradient
         ),
         .faces(
@@ -77,7 +77,7 @@ class EmojiMemoryGame: ObservableObject {
             gradient: Gradient.facesEmojisGradient
         ),
         .flags(
-            identifier: "Sports",
+            identifier: "Flags",
             emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
             pairsOfCards: Int.random(in: 3...5),
             color: .purple,
@@ -128,31 +128,38 @@ class EmojiMemoryGame: ObservableObject {
         switch theme {
         case .animals(_, let emojis, let numberOfPairsOfCards, _, _):
             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "🦁🐯🐰🐴"
+                var emojis = emojis.randomElement() ?? "🦁🐯🐰🐴"
+                return emojis.removeDuplicateCharacters()
             }
         case .faces(_, let emojis, let numberOfPairsOfCards, _, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                 emojis.randomElement() ?? "😃😍😝🧐"
+                 var emojis = emojis.randomElement() ?? "😃😍😝🧐"
+                 return emojis.removeDuplicateCharacters()
             }
         case .flags(_, let emojis, let numberOfPairsOfCards, _, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "😃😍😝🧐"
+                 var emojis = emojis.randomElement() ?? "🏳️🏴🏴‍☠️🏁🚩🇺🇳🇦🇶"
+                 return emojis.removeDuplicateCharacters()
             }
         case .food(_, let emojis, let numberOfPairsOfCards, _, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "😃😍😝🧐"
+                 var emojis = emojis.randomElement() ?? "🍖🥩🥓🥞🥐🥯"
+                 return emojis.removeDuplicateCharacters()
             }
         case .halloween(_, let emojis, let numberOfPairsOfCards, _, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "😃😍😝🧐"
+                 var emojis = emojis.randomElement() ?? "💀👻🎃🪦🕷🧟‍♀️🧛🏻‍♀️👹👽"
+                 return emojis.removeDuplicateCharacters()
             }
         case .sports(_, let emojis, let numberOfPairsOfCards, _, _):
             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "⚽️🏀🏈⚾️"
+                var emojis = emojis.randomElement() ?? "⚽️🏀🏈⚾️🎾🏐🏉🎱"
+                return emojis.removeDuplicateCharacters()
             }
         case .plants(_, let emojis, let numberOfPairsOfCards, _, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "😃😍😝🧐"
+                 var emojis = emojis.randomElement() ?? "🌵🎄🌲🌳🌴🌱"
+                 return emojis.removeDuplicateCharacters()
             }
         }
     }
@@ -212,46 +219,4 @@ class EmojiMemoryGame: ObservableObject {
         theme = EmojiMemoryGame.themes.randomElement()!
         model = EmojiMemoryGame.createMemoryGame(with: theme)
     }
-}
-
-extension Color {
-    static let cream: Color = Color(red: 249/255, green: 223/255, blue: 205/255)
-}
-
-extension Gradient {
-    static let animalsEmojisGradient = LinearGradient(
-        colors: [.cream, .yellow, .pink],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-    static let facesEmojisGradient = LinearGradient(
-        colors: [.cream, .yellow, .orange, .pink,],
-        startPoint: .bottomTrailing,
-        endPoint: .topLeading
-    )
-    static let flagsEmojisGradient = LinearGradient(
-        colors: [.purple, .white, .blue],
-        startPoint: .bottom,
-        endPoint: .topTrailing
-    )
-    static let foodEmojisGradient = LinearGradient(
-        colors: [.pink, .red, .orange, .purple],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-    static let halloweenEmojisGradient = LinearGradient(
-        colors: [.orange, .red, .purple, .black],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-    static let sportsEmojisGradient = LinearGradient(
-        colors: [.blue, .white, .purple,],
-        startPoint: .topTrailing,
-        endPoint: .bottomLeading
-    )
-    static let plantsEmojisGradient = LinearGradient(
-        colors: [.green, .cyan, .mint,],
-        startPoint: .center,
-        endPoint: .bottomLeading
-    )
 }
