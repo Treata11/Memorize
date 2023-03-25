@@ -34,7 +34,7 @@ struct EmojiMemoryGameView: View {
         VStack {
             gameInfo
             Grid(viewModel.cards) { card in
-                CardView(card: card)
+                CardView(viewModel: viewModel, card: card)
                     .onTapGesture {
                         viewModel.choose(card)
                     }
@@ -42,11 +42,14 @@ struct EmojiMemoryGameView: View {
             newGameButton
         }
         .padding()
-        .foregroundColor(viewModel.colorOfTheTheme)
+        .foregroundColor(viewModel.colorOfTheme)
     }
+    
 }
 
 struct CardView: View {
+    @ObservedObject var viewModel: EmojiMemoryGame
+    
     var card: MemoryGame<String>.Card
     
     var body: some View {
@@ -59,11 +62,11 @@ struct CardView: View {
         ZStack {
             if card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
+                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth).fill(viewModel.gradientOfTheme)
                 Text(card.content)
             } else {
                 if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill()
+                    RoundedRectangle(cornerRadius: cornerRadius).fill(viewModel.gradientOfTheme)
                 }
             }
         }
