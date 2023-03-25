@@ -2,7 +2,7 @@
 //  EmojiMemoryGameView.swift
 //  Memorize
 //
-//  Created by Treata Norouzi on 3/9/23.
+//  Created by Treata Norouzi on 3/26/23.
 //
 
 import SwiftUI
@@ -34,7 +34,7 @@ struct EmojiMemoryGameView: View {
         VStack {
             gameInfo
             Grid(viewModel.cards) { card in
-                CardView(viewModel: viewModel, card: card)
+                CardView(_viewModel: viewModel, card: card)
                     .onTapGesture {
                         viewModel.choose(card)
                     }
@@ -48,7 +48,7 @@ struct EmojiMemoryGameView: View {
 }
 
 struct CardView: View {
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var _viewModel: EmojiMemoryGame
     
     var card: MemoryGame<String>.Card
     
@@ -62,26 +62,20 @@ struct CardView: View {
         ZStack {
             if card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth).fill(viewModel.gradientOfTheme)
+                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth).fill(_viewModel.gradientOfTheme)
                 Text(card.content)
             } else {
                 if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill(viewModel.gradientOfTheme)
+                    RoundedRectangle(cornerRadius: cornerRadius).fill(_viewModel.gradientOfTheme)
                 }
             }
         }
         .padding()
         .font(Font.system(size: font(for: size)))
     }
-    /// embeded into a function:
-    // There used to be a different syntax for swiftUI
-    // That some ViewBuilder like GeometryReader, ForEach ...
-    // Used to have self in front of each arguement
-    // Instructor embeded the whole body inside a func
-    // And called it with self infront of the func to avoid
-    // Typing self for serval times.
-    
+
     // MARK: - Drawing Constants
+    
     let cornerRadius: CGFloat = 10
     let edgeLineWidth: CGFloat = 5
               
@@ -93,8 +87,9 @@ struct CardView: View {
 
 // MARK: - Preview(s)
 
-struct ContentView_Previews: PreviewProvider {
+struct _ContentView_Previews: PreviewProvider {
     static var previews: some View {
         EmojiMemoryGameView(viewModel: EmojiMemoryGame())
     }
 }
+
