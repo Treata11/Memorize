@@ -1,45 +1,46 @@
 //
-//  EmojiMemoryGame.swift
+//  _EmojiMemoryGame.swift
 //  Memorize
 //
-//  Created by Treata Norouzi on 3/14/23.
+//  Created by Treata Norouzi on 3/26/23.
 //
 
 import SwiftUI
 
-class EmojiMemoryGame: ObservableObject {
-    @Published private var model: MemoryGame<String> = createMemoryGame(with: themes.randomElement() ?? themes[0])
-    
-//    static var randomTheme: Theme {
-//        get { EmojiMemoryGame.themes.randomElement() ?? EmojiMemoryGame.themes[2] }
-//    }
+//
+//  _EmojiMemoryGame.swift
+//  Memorize
+//
+//  Created by Treata Norouzi on 3/26/23.
+//
 
-    private var theme: Theme
+import SwiftUI
+
+class _EmojiMemoryGame: ObservableObject {
+    @Published private var model: MemoryGame<String> = _createMemoryGame(with: _themes.randomElement() ?? _themes[0])
+    
+
+    private var _theme: _Theme
     
     init() {
-        theme = EmojiMemoryGame.themes.randomElement()!
-        model = EmojiMemoryGame.createMemoryGame(with: theme)
+        _theme = _EmojiMemoryGame._themes.randomElement()!
+        model = _EmojiMemoryGame._createMemoryGame(with: _theme)
+        
     }
-    
-    var nameOfTheTheme: String { name(of: theme) }
-    var colorOfTheme: Color { color(of: theme) }
-    var gradientOfTheme: LinearGradient { gradient(of: theme) }
+
+    var nameOfTheTheme: String { name(of: _theme) }
+    var colorOfTheme: Color { color(of: _theme) }
+    var gradientOfTheme: LinearGradient { gradient(of: _theme) }
     var score: String { String(model.score) }
     
     // MARK: - Theme
     
-    enum Theme {
-        case animals(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
-        case faces(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
-        case flags(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
-        case food(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
-        case halloween(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
-        case sports(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
-        case plants(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
+    enum _Theme {
+        case emojiTheme(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
     }
     
-    static var themes: Array<Theme> = [
-        .animals(
+    static var _themes: [_Theme] = [
+        .emojiTheme(
             identifier: "Animals",
             emojis: [
                 "🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄",
@@ -50,7 +51,7 @@ class EmojiMemoryGame: ObservableObject {
             color: .pink,
             gradient: Gradient.animalsEmojisGradient
         ),
-        .faces(
+        .emojiTheme(
             identifier: "Faces",
             emojis: [
                 "😀", "😃", "😄", "😁", "😆", "😅", "🤣", "😂", "🙂", "🙃", "😉",
@@ -76,14 +77,14 @@ class EmojiMemoryGame: ObservableObject {
             color: .yellow,
             gradient: Gradient.facesEmojisGradient
         ),
-        .flags(
+        .emojiTheme(
             identifier: "Flags",
             emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
             pairsOfCards: Int.random(in: 3...5),
             color: .purple,
             gradient: Gradient.flagsEmojisGradient
         ),
-        .food(
+        .emojiTheme(
             identifier: "Food",
             emojis: [
                 "🍖", "🥩", "🥓", "🥞", "🥐", "🥯", "🫒", "🥑", "🍏", "🍆", "🍌",
@@ -95,14 +96,14 @@ class EmojiMemoryGame: ObservableObject {
             color: .pink,
             gradient: Gradient.foodEmojisGradient
         ),
-        .halloween(
+        .emojiTheme(
             identifier: "Halloween",
             emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",],
             pairsOfCards: Int.random(in: 5...9),
             color: .orange,
             gradient: Gradient.halloweenEmojisGradient
         ),
-        .sports(
+        .emojiTheme(
             identifier: "Sports",
             emojis: [
                 "⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸", "🥊",
@@ -112,7 +113,7 @@ class EmojiMemoryGame: ObservableObject {
             color: .blue,
             gradient: Gradient.sportsEmojisGradient
         ),
-        .plants(
+        .emojiTheme(
             identifier: "Plants",
             emojis: [
                 "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🍄",
@@ -124,82 +125,34 @@ class EmojiMemoryGame: ObservableObject {
         ),
     ]
     
-    static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
+    static func _createMemoryGame(with theme: _Theme) -> MemoryGame<String> {
         switch theme {
-        case .animals(_, let emojis, let numberOfPairsOfCards, _, _):
+        case .emojiTheme(_, let emojis, let numberOfPairsOfCards, _, _):
             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
                 var emojis = emojis.randomElement()!
                 return emojis.removeDuplicateCharacters()
             }
-        case .faces(_, let emojis, let numberOfPairsOfCards, _, _):
-             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                 var emojis = emojis.randomElement()!
-                 return emojis.removeDuplicateCharacters()
-            }
-        case .flags(_, let emojis, let numberOfPairsOfCards, _, _):
-             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                 var emojis = emojis.randomElement()!
-                 return emojis.removeDuplicateCharacters()
-            }
-        case .food(_, let emojis, let numberOfPairsOfCards, _, _):
-             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                 var emojis = emojis.randomElement()!
-                 return emojis.removeDuplicateCharacters()
-            }
-        case .halloween(_, let emojis, let numberOfPairsOfCards, _, _):
-             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                 var emojis = emojis.randomElement()!
-                 return emojis.removeDuplicateCharacters()
-            }
-        case .sports(_, let emojis, let numberOfPairsOfCards, _, _):
-            return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                var emojis = emojis.randomElement()!
-                return emojis.removeDuplicateCharacters()
-            }
-        case .plants(_, let emojis, let numberOfPairsOfCards, _, _):
-             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                 var emojis = emojis.randomElement()!
-                 return emojis.removeDuplicateCharacters()
-            }
         }
     }
     
-    func name(of theme: Theme) -> String {
+    func name(of theme: _Theme) -> String {
         switch theme {
-        case .animals(let name, _, _, _, _): return name
-        case .faces(let name, _, _, _, _): return name
-        case .flags(let name, _, _, _, _): return name
-        case .food(let name, _, _, _, _): return name
-        case .halloween(let name, _, _, _, _): return name
-        case .sports(let name, _, _, _, _): return name
-        case .plants(let name, _, _, _, _): return name
+        case .emojiTheme(let name, _, _, _, _): return name
         }
     }
     
-    func gradient(of theme: Theme) -> LinearGradient {
+    func gradient(of theme: _Theme) -> LinearGradient {
         switch theme {
-        case .animals(_, _, _, _, let gradient): return gradient
-        case .faces(_, _, _, _, let gradient): return gradient
-        case .flags(_, _, _, _, let gradient): return gradient
-        case .food(_, _, _, _, let gradient): return gradient
-        case .halloween(_, _, _, _, let gradient): return gradient
-        case .sports(_, _, _, _, let gradient): return gradient
-        case .plants(_, _, _, _, let gradient): return gradient
+        case .emojiTheme(_, _, _, _, let gradient): return gradient
         }
     }
     
-    func color(of theme: Theme) -> Color {
+    func color(of theme: _Theme) -> Color {
         switch theme {
-        case .animals(_, _, _, let color, _): return color
-        case .faces(_, _, _, let color, _): return color
-        case .flags(_, _, _, let color, _): return color
-        case .food(_, _, _, let color, _): return color
-        case .halloween(_, _, _, let color, _): return color
-        case .sports(_, _, _, let color, _): return color
-        case .plants(_, _, _, let color, _): return color
+        case .emojiTheme(_, _, _, let color, _): return color
         }
     }
-    
+
     // MARK: - Access to the Model (Intercome)
     
     var cards: Array<MemoryGame<String>.Card> {
@@ -216,7 +169,8 @@ class EmojiMemoryGame: ObservableObject {
     func newGame() {
         model.cards = []
         model.score = 0
-        theme = EmojiMemoryGame.themes.randomElement()!
-        model = EmojiMemoryGame.createMemoryGame(with: theme)
+        _theme = _EmojiMemoryGame._themes.randomElement()!
+        model = _EmojiMemoryGame._createMemoryGame(with: _theme)
     }
 }
+
