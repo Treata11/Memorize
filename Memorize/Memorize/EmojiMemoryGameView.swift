@@ -12,7 +12,12 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
-            Text(viewModel.nameOfTheTheme)
+            HStack {
+                Text(viewModel.nameOfTheTheme)
+                Spacer()
+                Text("Score: \(viewModel.score)")
+            }
+            .padding()
             Grid(viewModel.cards) { card in
                 CardView(card: card)
                     .onTapGesture {

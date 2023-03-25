@@ -21,21 +21,9 @@ class EmojiMemoryGame: ObservableObject {
         model = EmojiMemoryGame.createMemoryGame(with: theme)
     }
     
-    var nameOfTheTheme: String {
-        name(of: theme)
-    }
-    var colorOfTheTheme: Color {
-        color(of: theme)
-    }
-    
-    
-//    static func createMemoryGame() -> MemoryGame<String> {
-//        let emojis: Array<String> = ["😃", "😍", "😝", "🧐", "😎", "😒", "😱", "☹️", "🥶", "😡", "😶‍🌫️", "🫥", "🤢", "💩", "🤔", "🤩", "🥳", "😜", "🤪", "😇", "🥹", "😂", "🥸", "🤯", "😳", "🫠", "😬", "😈", "🤡", "😻", "😿", "🤠", "😵‍💫"]
-//        let randomNumberOfPairsOfCards = Int.random(in: 3...5)  /// (3...6).randomElement()!
-//        return MemoryGame<String>(numberOfPairsOfCards: randomNumberOfPairsOfCards) { _ in
-//            emojis.randomElement() ?? "😜🤪😵‍💫😳🫠🤡"
-//        }
-//    }
+    var nameOfTheTheme: String { name(of: theme) }
+    var colorOfTheTheme: Color { color(of: theme) }
+    var score: String { String(model.score) }
     
     // MARK: - Theme
     
@@ -136,7 +124,7 @@ class EmojiMemoryGame: ObservableObject {
             }
         case .faces(_, let emojis, let numberOfPairsOfCards, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                emojis.randomElement() ?? "😃😍😝🧐"
+                 emojis.randomElement() ?? "😃😍😝🧐"
             }
         case .flags(_, let emojis, let numberOfPairsOfCards, _):
              return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
