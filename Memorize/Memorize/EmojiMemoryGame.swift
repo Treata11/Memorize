@@ -16,7 +16,6 @@ class EmojiMemoryGame: ObservableObject {
     init() {
         theme = EmojiMemoryGame.themes.randomElement()!
         model = EmojiMemoryGame.createMemoryGame(with: theme)
-        
     }
 
     var nameOfTheTheme: String { name(of: theme) }
@@ -29,7 +28,8 @@ class EmojiMemoryGame: ObservableObject {
     enum Theme {
         case emojiTheme(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
         
-        func shuffle(emojis: [String]) -> [String] {
+        // TODO: create a function that shuffles a var of type Theme emojis on call.
+        func shuffle() -> [String] {
             switch self {
             case .emojiTheme(_, let emojis, _, _, _): return emojis.shuffled()
             }
@@ -43,7 +43,8 @@ class EmojiMemoryGame: ObservableObject {
                 "🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄",
                 "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬", "🦢", "🐿",
                 "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"
-            ],
+            ]
+                .shuffled(),
             pairsOfCards: Int.random(in: 7...11),
             color: .pink,
             gradient: Gradient.animalsEmojisGradient
@@ -68,8 +69,9 @@ class EmojiMemoryGame: ObservableObject {
                 "🤰", "👼", "🤱", "👲", "🙍‍♂️", "🙍‍♀️", "🙎‍♂️", "🙎‍♀️", "🙅‍♂️", "🙅‍♀️", "🙆‍♂️",
                 "🙆‍♀️", "💁‍♂️", "💁‍♀️", "🙋‍♂️", "🙋‍♀️", "🙇‍♂️", "🙇‍♀️", "🤦‍♂️", "🤦‍♀️", "🤷‍♂️", "🤷‍♀️",
                 "💆‍♂️", "💆‍♀️", "💇‍♂️", "💇‍♀️", "🚶‍♂️", "🚶‍♀️", "💃", "🕺", "🤹‍♂️", "🤹‍♀️", "👫",
-            ],
-            pairsOfCards: Int.random(in: 8...16),
+            ]
+                .shuffled(),
+            pairsOfCards: Int.random(in: 8...13),
             color: .yellow,
             gradient: Gradient.facesEmojisGradient
         ),
@@ -87,8 +89,9 @@ class EmojiMemoryGame: ObservableObject {
                 "🥥", "🥟", "🍥", "🍚", "🍤", "🍝", "🍜", "🍲", "🍛", "🍣", "🍱",
                 "🥘", "🥗", "🫔", "🌭", "🌮", "🌯", "🍿", "🍫", "🍭", "🍬", "🍦",
                 "🍧", "🍢", "🥮", "🍡"
-            ],
-            pairsOfCards: Int.random(in: 8...14),
+            ]
+                .shuffled(),
+            pairsOfCards: Int.random(in: 8...11),
             color: .pink,
             gradient: Gradient.foodEmojisGradient
         ),
@@ -105,7 +108,8 @@ class EmojiMemoryGame: ObservableObject {
                 "⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸", "🥊",
                 "🥋", "⛷", "⛹️‍♀️", "🏋️‍♀️", "🤼‍♀️", "🤽‍♂️", "🤾‍♂️", "🏌️‍♂️", "🏇", "🧘‍♂️", "🛹",
                 "🤸‍♀️", "🤽‍♀️", "🤾‍♂️", "🤾‍♀️", "🤸‍♂️", "🏃‍♂️", "🏃‍♀️",
-            ],
+            ]
+                .shuffled(),
             pairsOfCards: Int.random(in: 6...8),
             color: .blue,
             gradient: Gradient.sportsEmojisGradient
@@ -115,7 +119,8 @@ class EmojiMemoryGame: ObservableObject {
             emojis: [
                 "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🍄",
                 "🪸", "🌾", "💐", "💐", "🪷", "🌺", "🌸", "🌼", "🌻", "🌹"
-            ],
+            ]
+                .shuffled(),
             pairsOfCards: Int.random(in: 4...8),
             color: .green,
             gradient: Gradient.plantsEmojisGradient
@@ -125,9 +130,8 @@ class EmojiMemoryGame: ObservableObject {
     static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
         switch theme {
         case .emojiTheme(_, let emojis, let numberOfPairsOfCards, _, _):
-            return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                return emojis.randomElement()!
-//                return emojis.randomizedElement()! // TODO: extract all elelents without the use of .random
+            return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { index in
+                return emojis[index]
             }
         }
     }
@@ -138,15 +142,15 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    func gradient(of theme: Theme) -> LinearGradient {
-        switch theme {
-        case .emojiTheme(_, _, _, _, let gradient): return gradient
-        }
-    }
-    
     func color(of theme: Theme) -> Color {
         switch theme {
         case .emojiTheme(_, _, _, let color, _): return color
+        }
+    }
+    
+    func gradient(of theme: Theme) -> LinearGradient {
+        switch theme {
+        case .emojiTheme(_, _, _, _, let gradient): return gradient
         }
     }
 
