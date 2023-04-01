@@ -28,6 +28,12 @@ class EmojiMemoryGame: ObservableObject {
     
     enum Theme {
         case emojiTheme(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
+        
+        func shuffle(emojis: [String]) -> [String] {
+            switch self {
+            case .emojiTheme(_, let emojis, _, _, _): return emojis.shuffled()
+            }
+        }
     }
     
     static var themes: [Theme] = [
@@ -43,7 +49,7 @@ class EmojiMemoryGame: ObservableObject {
             gradient: Gradient.animalsEmojisGradient
         ),
         .emojiTheme(
-            identifier: "Faces",
+            identifier: "Faces & People",
             emojis: [
                 "😀", "😃", "😄", "😁", "😆", "😅", "🤣", "😂", "🙂", "🙃", "😉",
                 "😊", "😇", "🥰", "😍", "🤩", "😘", "😗", "😚", "😙", "😋", "😛",
@@ -61,8 +67,7 @@ class EmojiMemoryGame: ObservableObject {
                 "👩‍✈️", "👨‍🚀", "👩‍🚀", "👨‍🚒", "👩‍🚒", "👮‍♂️", "👮‍♀️", "🕵️‍♀️", "🧝‍♀️", "👱‍♂️", "👱‍♀️",
                 "🤰", "👼", "🤱", "👲", "🙍‍♂️", "🙍‍♀️", "🙎‍♂️", "🙎‍♀️", "🙅‍♂️", "🙅‍♀️", "🙆‍♂️",
                 "🙆‍♀️", "💁‍♂️", "💁‍♀️", "🙋‍♂️", "🙋‍♀️", "🙇‍♂️", "🙇‍♀️", "🤦‍♂️", "🤦‍♀️", "🤷‍♂️", "🤷‍♀️",
-                "💆‍♂️", "💆‍♀️", "💇‍♂️", "💇‍♀️", "🚶‍♂️", "🚶‍♀️", "🏃‍♂️", "🏃‍♀️", "💃", "🕺", "🤸‍♂️",
-                "🤸‍♀️", "🤼‍♂️", "🤼‍♀️", "🤽‍♂️", "🤽‍♀️", "🤾‍♂️", "🤾‍♀️", "🤹‍♂️", "🤹‍♀️", "👫", "👬",
+                "💆‍♂️", "💆‍♀️", "💇‍♂️", "💇‍♀️", "🚶‍♂️", "🚶‍♀️", "💃", "🕺", "🤹‍♂️", "🤹‍♀️", "👫",
             ],
             pairsOfCards: Int.random(in: 8...16),
             color: .yellow,
@@ -98,7 +103,8 @@ class EmojiMemoryGame: ObservableObject {
             identifier: "Sports",
             emojis: [
                 "⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸", "🥊",
-                "🥋", "⛷", "⛹️‍♀️", "🏋️‍♀️", "🤼‍♀️", "🤽‍♂️", "🤾‍♂️", "🏌️‍♂️", "🏇", "🧘‍♂️", "🛹"
+                "🥋", "⛷", "⛹️‍♀️", "🏋️‍♀️", "🤼‍♀️", "🤽‍♂️", "🤾‍♂️", "🏌️‍♂️", "🏇", "🧘‍♂️", "🛹",
+                "🤸‍♀️", "🤽‍♀️", "🤾‍♂️", "🤾‍♀️", "🤸‍♂️", "🏃‍♂️", "🏃‍♀️",
             ],
             pairsOfCards: Int.random(in: 6...8),
             color: .blue,
@@ -120,8 +126,8 @@ class EmojiMemoryGame: ObservableObject {
         switch theme {
         case .emojiTheme(_, let emojis, let numberOfPairsOfCards, _, _):
             return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-                var emojis = emojis.randomElement()!
-                return emojis.removeDuplicateCharacters()
+                return emojis.randomElement()!
+//                return emojis.randomizedElement()! // TODO: extract all elelents without the use of .random
             }
         }
     }

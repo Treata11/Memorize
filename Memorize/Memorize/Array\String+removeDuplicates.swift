@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 //struct TODO<Element> where Element: Hashable {
 //    let array: Array<Any>
@@ -23,6 +24,32 @@ extension Array where Element: Hashable {
         let set = Set<Element>(self)
         self = Array(set)
     }
+    
+    func randomizedElement() -> Element? {
+        guard !isEmpty else {
+            return nil
+        }
+        var seenElements = Set<Element>()
+        repeat {
+            if let randomElement = self.randomElement(), !seenElements.contains(randomElement) {
+                seenElements.insert(randomElement)
+                return randomElement
+            }
+        } while true
+    }
+    
+    func sequencedElement() -> Element? {
+                guard !isEmpty else {
+                    return nil
+                }
+                var currentIndex = startIndex
+                while currentIndex != endIndex {
+                    let sequencedElement = self[currentIndex]
+                    formIndex(after: &currentIndex)
+                    return sequencedElement
+                }
+                return nil
+            }
 }
 
 //extension String {
@@ -35,14 +62,41 @@ extension Array where Element: Hashable {
 //                encounteredChars[char] = 1
 //            }
 //        }
-//        self = String(self.filter{ encounteredChars[$0] == 1 } )
+//        return self = String(self.filter{ encounteredChars[$0] == 1 } )
 //    }
 //}
 
 extension String {
     mutating func removeDuplicateCharacters() -> String {
-        let arrayOfCharacters = Set(self.map{ String($0) })
-//        return arrayOfCharacters.removeDuplicates()
-        return arrayOfCharacters.reduce("") { String($0) + String($1) }
+        let setOfCharacters = Set(self.map{ String($0) })
+        return setOfCharacters.reduce("") { String($0)  + String($1) }
     }
+}
+
+extension Collection where Element: Hashable {
+//    func randomizedElement() -> Element? {
+//        guard !isEmpty else {
+//            return nil
+//        }
+//        var seenElements = Set<Element>()
+//        repeat {
+//            if let randomElement = self.randomElement(), !seenElements.contains(randomElement) {
+//                seenElements.insert(randomElement)
+//                return randomElement
+//            }
+//        } while true
+//    }
+    
+//    func sequencedElement() -> Element? {
+//                guard !isEmpty else {
+//                    return nil
+//                }
+//                var currentIndex = startIndex
+//                while currentIndex != endIndex {
+//                    let sequencedElement = self[currentIndex]
+//                    formIndex(after: &currentIndex)
+//                    return sequencedElement
+//                }
+//                return nil
+//            }
 }
