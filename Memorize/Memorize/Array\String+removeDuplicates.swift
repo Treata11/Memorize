@@ -100,3 +100,12 @@ extension Collection where Element: Hashable {
 //                return nil
 //            }
 }
+
+extension Array where Element: Comparable {
+    func randomElement<T: RandomNumberGenerator>(using generator: inout T) -> Element? {
+        guard !self.isEmpty else { return nil }
+        let randomIndex = Int.random(in: 0..<self.count, using: &generator)
+        return self[randomIndex]
+    }
+}
+
