@@ -185,10 +185,8 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func newGame() {
-        model.cards = []
-        model.score = 0
+        model.restart()
         theme = EmojiMemoryGame.themes.randomElement()!
         model = EmojiMemoryGame.createMemoryGame(with: theme)
     }
 }
-

@@ -1,5 +1,5 @@
 //
-//  Color:Gradient+NewVivids.swift
+//  Color&Gradient+NewVivids.swift
 //  Memorize
 //
 //  Created by Treata Norouzi on 3/25/23.

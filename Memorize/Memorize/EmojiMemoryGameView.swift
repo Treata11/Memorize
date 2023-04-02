@@ -44,7 +44,6 @@ struct EmojiMemoryGameView: View {
         .padding()
         .foregroundColor(viewModel.colorOfTheme)
     }
-    
 }
 
 struct CardView: View {
