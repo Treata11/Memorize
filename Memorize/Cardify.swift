@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct Cardify: Animatable, ViewModifier, AnimatableModifier {
+    @ObservedObject var viewModel: EmojiMemoryGame
+    
     var rotation: Double
     
-    init(isFaceUp: Bool) {
+    init(isFaceUp: Bool, viewModel: EmojiMemoryGame) {
         rotation = isFaceUp ? 0 : 180
+        self.viewModel = viewModel
     }
     
     var isFaceUp: Bool {
@@ -27,11 +30,11 @@ struct Cardify: Animatable, ViewModifier, AnimatableModifier {
         ZStack {
             Group {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
+                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth).fill(viewModel.gradientOfTheme)
                 content
             }
             .opacity(isFaceUp ? 1 : 0)
-            RoundedRectangle(cornerRadius: cornerRadius).fill()
+            RoundedRectangle(cornerRadius: cornerRadius).fill(viewModel.gradientOfTheme)
                 .opacity(isFaceUp ? 0 : 1)
         }
         .rotation3DEffect(.degrees(rotation) , axis: (0,1,0))
@@ -44,6 +47,6 @@ struct Cardify: Animatable, ViewModifier, AnimatableModifier {
 
 extension View {
     func cardify(isFaceUp: Bool) -> some View {
-        self.modifier(Cardify(isFaceUp: isFaceUp))
+        self.modifier(Cardify(isFaceUp: isFaceUp, viewModel: EmojiMemoryGame()))
     }
 }
