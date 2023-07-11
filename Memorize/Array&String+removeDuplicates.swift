@@ -42,4 +42,16 @@ extension String {
 //        return arrayOfCharacters.removeDuplicates()
         return arrayOfCharacters.reduce("") { String($0) + String($1) }
     }
+    
+    mutating func removeDuplicates() -> String {
+        var uniqueString = ""
+        
+        for character in self {
+            if !uniqueString.contains(character) {
+                uniqueString.append(character)
+            }
+        }
+        
+        return uniqueString
+    }
 }

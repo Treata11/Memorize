@@ -24,23 +24,11 @@ class EmojiMemoryGame: ObservableObject {
 //    var gradientOfTheme: Gradient { gradient(of: theme) }
     var score: String { String(model.score) }
     
-//    static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
-//        switch theme {
-//        case .emojiTheme(_, let emojis, let numberOfPairsOfCards, _, _):
-//            return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { _ in
-//                var emojis = emojis.randomElement()!
-//                print(emojis)
-//                return emojis.removeDuplicateCharacters()
-//            }
-//        }
-//    }
-    
     static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
-        return MemoryGame<String>(numberOfPairsOfCards: theme.pairsOfCards) { _ in
-            var emojis = theme.emojis.randomElement()!
-                print(emojis)
-                return emojis.removeDuplicateCharacters()
-            }
+        let emojis = Array(theme.emojis).shuffled()
+        return MemoryGame<String>(numberOfPairsOfCards: theme.pairsOfCards) { pairIndex in
+            return emojis[pairIndex]
+        }
     }
     
     func name(of theme: Theme) -> String {
@@ -54,13 +42,6 @@ class EmojiMemoryGame: ObservableObject {
 //    func gradient(of theme: Theme) -> Gradient {
 ////        theme.gradient
 //    }
-    
-    private static func createMemoryGame() -> MemoryGame<String> {
-        let emojis: Array<String> = ["🤯", "🥹", "😆"]
-        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
-            return emojis[pairIndex]
-        }
-    }
     
     // MARK: - Access to the Model (Intercome)
     
