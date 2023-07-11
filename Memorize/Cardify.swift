@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct Cardify: Animatable, ViewModifier, AnimatableModifier {
-    var gradient: LinearGradient
+    var gradient: Gradient
     var rotation: Double
     
-    init(isFaceUp: Bool, gradient: LinearGradient) {
+    init(isFaceUp: Bool, gradient: Gradient) {
         rotation = isFaceUp ? 0 : 180
         self.gradient = gradient
     }
@@ -45,7 +45,7 @@ struct Cardify: Animatable, ViewModifier, AnimatableModifier {
 }
 
 extension View {
-    func cardify(isFaceUp: Bool, gradient: LinearGradient) -> some View {
+    func cardify(isFaceUp: Bool, gradient: Gradient) -> some View {
         self.modifier(Cardify(isFaceUp: isFaceUp, gradient: gradient))
     }
 }
