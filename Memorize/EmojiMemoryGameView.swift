@@ -23,7 +23,7 @@ struct EmojiMemoryGameView: View {
             }
             .padding()
 //            .foregroundColor(.orange)
-            .foregroundColor(viewModel.colorOfTheme)
+//            .foregroundColor(viewModel.colorOfTheme)
             Button {
                 withAnimation(.easeInOut) {
                     viewModel.resetGame()
@@ -31,7 +31,6 @@ struct EmojiMemoryGameView: View {
             } label: {
                 Text("New Game")
             }
-
         }
     }
 }
@@ -77,7 +76,7 @@ struct CardView: View {
                     .rotationEffect(.degrees(card.isMatched ? 360 : 0))
                     .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: card.isMatched)
             }
-            .cardify(isFaceUp: card.isFaceUp, gradient: viewModel.gradientOfTheme)
+            .cardify(isFaceUp: card.isFaceUp)
             .transition(AnyTransition.scale)
         }
     }

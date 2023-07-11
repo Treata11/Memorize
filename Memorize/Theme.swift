@@ -11,8 +11,9 @@ struct Theme: Identifiable, Hashable {
     let id: String
     var emojis: Set<String>
     var pairsOfCards: Int
-    var color: Color
-    var gradient: Gradient
+//    var color: Color
+    var color: RGBAColor
+//    var gradient: Gradient
 }
 
 var themes: Set<Theme> = [
@@ -24,8 +25,8 @@ var themes: Set<Theme> = [
             "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"
         ],
         pairsOfCards: Int.random(in: 7...11),
-        color: .pink,
-        gradient: Gradient.animalsEmojisGradient
+        color: .init(color: .pink)
+//        gradient: Gradient.animalsEmojisGradient
     ),
     Theme(
         id: "People & Faces",
@@ -51,15 +52,15 @@ var themes: Set<Theme> = [
             "💇‍♂️", "💇‍♀️", "🚶‍♂️", "🚶‍♀️", "💃", "🕺", "🤹‍♂️", "🤹‍♀️", "👫",
         ],
         pairsOfCards: Int.random(in: 8...16),
-        color: .yellow,
-        gradient: Gradient.animalsEmojisGradient
+        color: .init(color: .yellow)
+//        gradient: Gradient.animalsEmojisGradient
     ),
     Theme(
         id: "Flags",
         emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
         pairsOfCards: Int.random(in: 3...5),
-        color: .purple,
-        gradient: Gradient.flagsEmojisGradient
+        color: .init(color: .purple)
+//        gradient: Gradient.flagsEmojisGradient
     ),
     Theme(
         id: "Food",
@@ -70,15 +71,15 @@ var themes: Set<Theme> = [
             "🍧", "🍢", "🥮", "🍡"
         ],
         pairsOfCards: Int.random(in: 8...14),
-        color: .pink,
-        gradient: Gradient.foodEmojisGradient
+        color: .init(color: .red)
+//        gradient: Gradient.foodEmojisGradient
     ),
     Theme(
         id: "Halloween",
         emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽",],
         pairsOfCards: Int.random(in: 5...9),
-        color: .orange,
-        gradient: Gradient.halloweenEmojisGradient
+        color: .init(color: .orange)
+//        gradient: Gradient.halloweenEmojisGradient
     ),
     Theme(
         id: "Sports",
@@ -87,8 +88,8 @@ var themes: Set<Theme> = [
             "🥋", "⛷", "⛹️‍♀️", "🏋️‍♀️", "🤼‍♀️", "🤽‍♂️", "🤾‍♂️", "🏌️‍♂️", "🏇", "🧘‍♂️", "🛹"
         ],
         pairsOfCards: Int.random(in: 6...8),
-        color: .blue,
-        gradient: Gradient.sportsEmojisGradient
+        color: .init(color: .blue)
+//        gradient: Gradient.sportsEmojisGradient
     ),
     Theme(
         id: "Plants",
@@ -97,8 +98,8 @@ var themes: Set<Theme> = [
             "🪸", "🌾", "💐", "💐", "🪷", "🌺", "🌸", "🌼", "🌻", "🌹"
         ],
         pairsOfCards: Int.random(in: 4...10),
-        color: .green,
-        gradient: Gradient.plantsEmojisGradient
+        color: .init(color: .green)
+//        gradient: Gradient.plantsEmojisGradient
     ),
 ]
 

@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct Cardify: Animatable, ViewModifier, AnimatableModifier {
-    var gradient: Gradient
+//    var gradient: Gradient
     var rotation: Double
     
-    init(isFaceUp: Bool, gradient: Gradient) {
+    init(isFaceUp: Bool) {
         rotation = isFaceUp ? 0 : 180
-        self.gradient = gradient
     }
     
     var isFaceUp: Bool {
@@ -29,11 +28,13 @@ struct Cardify: Animatable, ViewModifier, AnimatableModifier {
         ZStack {
             Group {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth).fill(gradient)
+                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
+//                    .fill(gradient)
                 content
             }
             .opacity(isFaceUp ? 1 : 0)
-            RoundedRectangle(cornerRadius: cornerRadius).fill(gradient)
+            RoundedRectangle(cornerRadius: cornerRadius)
+//                .fill(gradient)
                 .opacity(isFaceUp ? 0 : 1)
         }
         .rotation3DEffect(.degrees(rotation) , axis: (0,1,0))
@@ -45,7 +46,7 @@ struct Cardify: Animatable, ViewModifier, AnimatableModifier {
 }
 
 extension View {
-    func cardify(isFaceUp: Bool, gradient: Gradient) -> some View {
-        self.modifier(Cardify(isFaceUp: isFaceUp, gradient: gradient))
+    func cardify(isFaceUp: Bool) -> some View {
+        self.modifier(Cardify(isFaceUp: isFaceUp))
     }
 }

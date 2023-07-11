@@ -21,7 +21,7 @@ class EmojiMemoryGame: ObservableObject {
 
     var nameOfTheTheme: String { name(of: theme) }
     var colorOfTheme: Color { color(of: theme) }
-    var gradientOfTheme: Gradient { gradient(of: theme) }
+//    var gradientOfTheme: Gradient { gradient(of: theme) }
     var score: String { String(model.score) }
     
 //    static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
@@ -43,35 +43,17 @@ class EmojiMemoryGame: ObservableObject {
             }
     }
     
-//    func name(of theme: Theme) -> String {
-//        switch theme {
-//        case .emojiTheme(let name, _, _, _, _): return name
-//        }
-//     }
-    
     func name(of theme: Theme) -> String {
         return theme.id
      }
-
-//    func color(of theme: Theme) -> Color {
-//       switch theme {
-//       case .emojiTheme(_, _, _, let color, _): return color
-//       }
-//    }
     
     func color(of theme: Theme) -> Color {
-        theme.color
+        return Color(rgbaColor: theme.color)
     }
 
-//   func gradient(of theme: Theme) -> Gradient {
-//       switch theme {
-//       case .emojiTheme(_, _, _, _, let gradient): return gradient
-//       }
-//   }
-    
-    func gradient(of theme: Theme) -> Gradient {
-        theme.gradient
-    }
+//    func gradient(of theme: Theme) -> Gradient {
+////        theme.gradient
+//    }
     
     private static func createMemoryGame() -> MemoryGame<String> {
         let emojis: Array<String> = ["🤯", "🥹", "😆"]
