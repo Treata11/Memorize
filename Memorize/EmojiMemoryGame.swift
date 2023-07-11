@@ -27,7 +27,7 @@ class EmojiMemoryGame: ObservableObject {
     // MARK: - Theme
     
     enum Theme {
-        case emojiTheme(identifier: String, emojis: [String], pairsOfCards: Int, color: Color, gradient: LinearGradient)
+        case emojiTheme(identifier: String, emojis: Set<String>, pairsOfCards: Int, color: Color, gradient: LinearGradient)
     }
 
     static var themes: [Theme] = [
@@ -103,7 +103,7 @@ class EmojiMemoryGame: ObservableObject {
             ],
             pairsOfCards: Int.random(in: 6...8),
             color: .blue,
-            gradient: Gradient.sportsEmojisGradient        ),
+            gradient: Gradient.sportsEmojisGradient),
         .emojiTheme(
             identifier: "Plants",
             emojis: [

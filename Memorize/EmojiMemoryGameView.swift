@@ -77,7 +77,7 @@ struct CardView: View {
                     .rotationEffect(.degrees(card.isMatched ? 360 : 0))
                     .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: card.isMatched)
             }
-            .cardify(isFaceUp: card.isFaceUp)
+            .cardify(isFaceUp: card.isFaceUp, gradient: viewModel.gradientOfTheme)
             .transition(AnyTransition.scale)
         }
     }
@@ -95,6 +95,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
         game.choose(game.cards.first!)
-        return EmojiMemoryGameView(viewModel: game)
+        return EmojiMemoryGameView(viewModel: EmojiMemoryGame())
     }
 }
