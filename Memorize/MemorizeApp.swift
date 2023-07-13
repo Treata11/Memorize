@@ -9,11 +9,21 @@ import SwiftUI
 
 @main
 struct MemorizeApp: App {
-    @StateObject var  game = EmojiMemoryGame()
     
+    @StateObject var store: EmojiMemoryGameStore
+    @StateObject var game: EmojiMemoryGame
+    
+    init() {
+        _game = StateObject(wrappedValue: EmojiMemoryGame(emojiMemoryGameStore: $store))
+    }
+//    init(store: Binding<EmojiMemoryGameStore>, game: EmojiMemoryGame) {
+//        _store = store
+//        _game = StateObject(wrappedValue: EmojiMemoryGame(emojiMemoryGameStore: store))
+//    }
+
     var body: some Scene {
         WindowGroup {
-            EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+            EmojiMemoryGameView(viewModel: game)
         }
     }
 }
