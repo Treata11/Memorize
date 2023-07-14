@@ -10,23 +10,13 @@ import Combine
 
 class EmojiMemoryGame: ObservableObject
 {
-    @Binding var emojiMemoryGameStore: EmojiMemoryGameStore
-    
     @Published private var model: MemoryGame<String>
     
-    //TODO: Decode from the JSON file from the store
-    @Published var theme: Theme {
-        didSet {
-            resetGame()
-        }
-    }
+    var theme: Theme
     
-//    static var theme = Theme(id: UUID(), name: "", emojis: ["ρ", "π", "δ", "ζ", "ξ", "ε", "ψ", "ω", "β", "μ"], pairsOfCards: 6, color: RGBAColor(color: .white))
-
-    init(emojiMemoryGameStore: Binding<EmojiMemoryGameStore>) {
-        _emojiMemoryGameStore = emojiMemoryGameStore
-        _theme = Published(wrappedValue: emojiMemoryGameStore.wrappedValue.themes.randomElement()!)
-        _model = Published(initialValue: EmojiMemoryGame.createMemoryGame(with: theme))
+    init(theme: Theme) {
+        self.theme = theme
+        model = EmojiMemoryGame.createMemoryGame(with: theme)
     }
     
     var nameOfTheTheme: String { name(of: theme) }
@@ -34,7 +24,7 @@ class EmojiMemoryGame: ObservableObject
 //    var gradientOfTheme: Gradient { gradient(of: theme) }
     var score: String { String(model.score) }
     
-    static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
+    private static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
         let emojis = Array(theme.emojis).shuffled()
         return MemoryGame<String>(numberOfPairsOfCards: theme.pairsOfCards) { pairIndex in
             return emojis[pairIndex]
