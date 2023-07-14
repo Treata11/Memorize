@@ -26,7 +26,7 @@ class EmojiMemoryGame: ObservableObject
     init(emojiMemoryGameStore: Binding<EmojiMemoryGameStore>) {
         _emojiMemoryGameStore = emojiMemoryGameStore
         _theme = Published(wrappedValue: emojiMemoryGameStore.wrappedValue.themes.randomElement()!)
-        _model = Published(initialValue: createMemoryGame(with: theme))
+        _model = Published(initialValue: EmojiMemoryGame.createMemoryGame(with: theme))
     }
     
     var nameOfTheTheme: String { name(of: theme) }
@@ -34,7 +34,7 @@ class EmojiMemoryGame: ObservableObject
 //    var gradientOfTheme: Gradient { gradient(of: theme) }
     var score: String { String(model.score) }
     
-    func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
+    static func createMemoryGame(with theme: Theme) -> MemoryGame<String> {
         let emojis = Array(theme.emojis).shuffled()
         return MemoryGame<String>(numberOfPairsOfCards: theme.pairsOfCards) { pairIndex in
             return emojis[pairIndex]

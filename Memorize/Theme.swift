@@ -7,7 +7,7 @@
 import Foundation
 import Combine
 
-struct Theme: Identifiable, Hashable {
+struct Theme: Identifiable, Hashable, Equatable, Codable {
     var id: UUID
     let name: String
     var emojis: Set<String>
