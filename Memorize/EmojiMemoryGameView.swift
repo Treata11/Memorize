@@ -91,8 +91,11 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame(theme: <#Theme#>)
-        game.choose(game.cards.first!)
-        return EmojiMemoryGameView(viewModel: EmojiMemoryGame(theme: <#Theme#>))
+        let theme: Theme = EmojiThemes().savedThemes.randomElement()!
+        let game = EmojiMemoryGame(theme: theme)
+        return EmojiMemoryGameView(viewModel: game)
+//        let game = EmojiMemoryGame(theme: <#Theme#>)
+//        game.choose(game.cards.first!)
+//        return EmojiMemoryGameView(viewModel: EmojiMemoryGame(theme: <#Theme#>))
     }
 }
