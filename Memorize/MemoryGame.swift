@@ -26,9 +26,19 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    score += 2
+                } else {
+                    if cards[indexOfTheOneAndOnlyFaceUpCard!].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen || cards[chosenIndex].hasAlreadyBeenSeen {
+                        score -= 3
+                    }
                 }
                 cards[chosenIndex].isFaceUp = true
             } else {
+                for index in cards.indices {
+                    if cards[index].isFaceUp {
+                        cards[index].hasAlreadyBeenSeen = true
+                    }
+                }
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
         }
@@ -53,7 +63,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 }
             }
         }
-        
+        var hasAlreadyBeenSeen = false
         var isMatched = false {
             didSet { stopUsingBonusTime() }
         }

@@ -17,9 +17,6 @@ struct MemoryGameThemeChooser: View {
                     NavigationLink(destination: EmojiMemoryGameView(viewModel: EmojiMemoryGame(theme: theme))
                         .navigationTitle(theme.name)) {
                             ZStack(alignment: .leading) {
-//                                RoundedRectangle(cornerRadius: 5)
-//                                    .fill(color(for: theme))
-//                                    .edgesIgnoringSafeArea(.all)
                                 VStack(alignment: .leading, spacing: 7) {
                                     HStack() {
                                         Text(theme.name).font(.title)
@@ -85,8 +82,6 @@ struct MemoryGameThemeChooser: View {
         let description = "Pairs: "
         return description + String(theme.emojis.count)
     }
-    
-    
  }
 
 struct MemoryGameThemeChooser_Previews: PreviewProvider {

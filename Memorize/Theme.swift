@@ -11,6 +11,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
     var id: UUID
     let name: String
     var emojis: Set<String>
+    var removedEmojis: Set<String>
     var pairsOfCards: Int
     var color: RGBAColor
 //    var gradient: Gradient
@@ -25,10 +26,12 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         id: UUID(),
         name: "Animals",
         emojis: [
-            "🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋", "🦄",
-            "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬", "🦢", "🐿",
-            "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈", "🦭"
+            "🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋",
+            "🦄", "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬",
+            "🦢", "🐿", "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈",
+            "🦭"
         ],
+        removedEmojis: [],
         pairsOfCards: Int.random(in: 7...11),
         color: .pink
         //        gradient: Gradient.animalsEmojisGradient
@@ -57,6 +60,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
             "🤸‍♀️", "🤼‍♂️", "🤼‍♀️", "🤽‍♂️", "🤽‍♀️", "🤾‍♂️", "🤾‍♀️", "🤹‍♂️", "🤹‍♀️", "💆‍♂️", "💆‍♀️",
             "💇‍♂️", "💇‍♀️", "🚶‍♂️", "🚶‍♀️", "💃", "🕺", "🤹‍♂️", "🤹‍♀️", "👫",
         ],
+        removedEmojis: [],
         pairsOfCards: Int.random(in: 8...16),
         color: .yellow
         ////        gradient: Gradient.animalsEmojisGradient
@@ -65,6 +69,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         id: UUID(),
         name: "Flags",
         emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
+        removedEmojis: [],
         pairsOfCards: Int.random(in: 3...5),
         color: .fuchsia
         ////        gradient: Gradient.flagsEmojisGradient
@@ -72,7 +77,8 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
     static let halloween = Theme(
         id: UUID(),
         name: "Halloween",
-        emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽"],
+        emojis: ["💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "👽", "☠️"],
+        removedEmojis: [],
         pairsOfCards: Int.random(in: 5...9),
         color: .orange
         ////        gradient: Gradient.halloweenEmojisGradient
@@ -84,6 +90,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
             "⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸", "🥊",
             "🥋", "⛷", "⛹️‍♀️", "🏋️‍♀️", "🤼‍♀️", "🤽‍♂️", "🤾‍♂️", "🏌️‍♂️", "🏇", "🧘‍♂️", "🛹"
         ],
+        removedEmojis: [],
         pairsOfCards: Int.random(in: 6...8),
         color: .blue
         ////        gradient: Gradient.sportsEmojisGradient
@@ -95,6 +102,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
             "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🍄",
             "🪸", "🌾", "💐", "💐", "🪷", "🌺", "🌸", "🌼", "🌻", "🌹"
         ],
+        removedEmojis: [],
         pairsOfCards: Int.random(in: 4...10),
         color: .green
         ////        gradient: Gradient.plantsEmojisGradient
@@ -103,6 +111,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         id: UUID(),
         name: "Greek",
         emojis: ["ρ", "π", "δ", "ζ", "ξ", "ε", "ψ", "ω", "β", "μ"],
+        removedEmojis: [],
         pairsOfCards: 6,
         color: RGBAColor(color: .cream)
     )

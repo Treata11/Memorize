@@ -52,6 +52,10 @@ class EmojiThemes: ObservableObject
                  save()
         }
     }
+    
+    func remove(emoji: String) {
+        // TODO: Implement removing of emojis in the selected theme
+    }
 }
 
 extension Collection where Element: Identifiable {
