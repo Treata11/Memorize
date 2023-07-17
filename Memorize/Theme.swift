@@ -104,7 +104,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         name: "Greek",
         emojis: ["ρ", "π", "δ", "ζ", "ξ", "ε", "ψ", "ω", "β", "μ"],
         pairsOfCards: 6,
-        color: RGBAColor(color: .white)
+        color: RGBAColor(color: .cream)
     )
                     
 //    init(id: UUID, name: String, emojis: Set<String>, pairsOfCards: Int, color: RGBAColor) {
