@@ -5,7 +5,6 @@
 //  Created by Treata Norouzi on 3/24/23.
 //
 import Foundation
-import SwiftUI
 
 struct Theme: Identifiable, Equatable, Hashable, Codable {
     var id: UUID
@@ -19,6 +18,26 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
     var json: Data? {
         return try? JSONEncoder().encode(self)
     }
+    
+    mutating func addEmoji(_ emojisToAdd: String, to theme: Theme) {
+        emojisToAdd.forEach { emoji in
+            emojis.insert(String(emoji))
+        }
+    }
+    
+    mutating func removeEmoji(_ emojisToRemove: String) -> String {
+        emojisToRemove.forEach { removedEmojis.insert(String($0)) }
+        removedEmojis.forEach { emoji in
+            emojis.remove(emoji)
+        }
+        return emojisToRemove
+    }
+    
+//    mutating func removeEmoji(_ emojisToRemove: String, from theme: Theme) -> String {
+//        theme.emojis = theme.emojis.filter{ !emojisToRemove.contains($0) }
+//        theme.emojis.removeFirst()
+//        return emojisToRemove
+//    }
     
     static var themes = [animals, faces, flags, halloween, sports, plants, greek,]
     
@@ -115,14 +134,6 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         pairsOfCards: 6,
         color: RGBAColor(color: .cream)
     )
-                    
-//    init(id: UUID, name: String, emojis: Set<String>, pairsOfCards: Int, color: RGBAColor) {
-//        self.id = id
-//        self.name = name
-//        self.emojis = emojis
-//        self.pairsOfCards = pairsOfCards
-//        self.color = color
-//    }
 }
 
 extension Data {

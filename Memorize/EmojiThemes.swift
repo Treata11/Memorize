@@ -11,6 +11,7 @@ import Combine
 class EmojiThemes: ObservableObject
 {
     @Published var savedThemes: [Theme]
+//    @Published var ThemeModel = Theme(from: <#Decoder#>)
     
     static let persistanceKey = "EmojiMemoryGameSavedThemes"
     
@@ -22,14 +23,6 @@ class EmojiThemes: ObservableObject
         }
         self.savedThemes = Theme.themes
     }
-    
-//    init?(json: Data?) {    // Failable init
-//        if json != nil, let newTheme = try? JSONDecoder().decode(Theme.self, from: json!) {
-//            self = newTheme
-//        } else {
-//            return nil
-//        }
-//    }
     
     private func save() {
         if let data = try? JSONEncoder().encode(savedThemes) {
@@ -49,13 +42,16 @@ class EmojiThemes: ObservableObject
     func remove(theme: Theme) {
         if let index = savedThemes.firstIndex(matching: theme) {
             savedThemes.remove(at: index)
-                 save()
+            save()
         }
     }
-    
-    func remove(emoji: String) {
-        // TODO: Implement removing of emojis in the selected theme
-    }
+ 
+//    func removeEmojis(_ emojisToRemove: String, from theme: Theme) -> String {
+//        if let index = savedThemes.firstIndex(matching: theme) {
+//            savedThemes[index] = theme
+//            theme.removeEmoji(emojisToRemove)
+//        }
+//    }
 }
 
 extension Collection where Element: Identifiable {
