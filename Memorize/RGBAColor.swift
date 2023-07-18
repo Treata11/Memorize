@@ -14,6 +14,41 @@ struct RGBAColor: Codable, Equatable, Hashable {
     let alpha: Double
 }
 
+struct RGBAGradient: Codable, Equatable, Hashable {
+    let red: Double
+    let green: Double
+    let blue: Double
+    let alpha: Double
+    let colors: [RGBAColor]
+}
+
+extension RGBAGradient {
+    init(rgbaGradient rgba: RGBAGradient) {
+//        self.init(.sRGB, red: rgba.red, green: rgba.green, blue: rgba.blue, opacity: rgba.alpha)
+        self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha, colors: rgba.colors)
+    }
+}
+
+//extension RGBAGradient {
+//    init(color: Color) {
+//        var red: CGFloat = 0
+//        var green: CGFloat = 0
+//        var blue: CGFloat = 0
+//        var alpha: CGFloat = 1
+//        var colors: [RGBAColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)] = []
+//        if let cgColor = color.cgColor {
+//            UIColor(cgColor: cgColor).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+//        }
+//        self.init(
+//            red: Double(red),
+//            green: Double(green),
+//            blue: Double(blue),
+//            alpha: Double(alpha),
+//            colors: [Color(rgbaColor: colors.first!) ]
+//        )
+//    }
+//}
+
 extension Color {
     init(rgbaColor rgba: RGBAColor) {
         self.init(.sRGB, red: rgba.red, green: rgba.green, blue: rgba.blue, opacity: rgba.alpha)

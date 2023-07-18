@@ -14,7 +14,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
     var removedEmojis: Set<String>
     var pairsOfCards: Int
     var color: RGBAColor
-//    var gradient: Gradient
+//    var gradient: RGBAGradient
     
     var json: Data? {
         return try? JSONEncoder().encode(self)
@@ -34,7 +34,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         removedEmojis: [],
         pairsOfCards: Int.random(in: 7...11),
         color: .pink
-        //        gradient: Gradient.animalsEmojisGradient
+//        gradient: Gradient.animalsEmojisGradient
     )
     static let faces = Theme(
         id: UUID(),

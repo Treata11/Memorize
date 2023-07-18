@@ -11,7 +11,7 @@ extension Color {
 }
 
 extension Gradient {
-    static let animalsEmojisGradient = Gradient(colors: [.cream, .yellow, .pink])
+    static let animalsEmojisGradient = Gradient(colors: [Color(rgbaColor: .cream), Color(rgbaColor: .yellow), Color(rgbaColor: .pink),])
     static let facesEmojisGradient = Gradient(colors: [.cream, .yellow, .orange, .pink,])
     static let flagsEmojisGradient = Gradient(colors: [.purple, .white, .blue])
     static let foodEmojisGradient = Gradient(colors: [.pink, .red, .orange, .purple])
