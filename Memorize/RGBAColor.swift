@@ -87,37 +87,37 @@ extension Color {
             colors = [
                 Color(
                     red: 0.8 * color.red,
-                    green: 0.9 * color.green,
-                    blue: 0.9 * color.blue
+                    green: max(1.1 * color.green, color.green),
+                    blue: max(1.1 * color.blue, color.blue)
                 ),
                 Color(rgbaColor: color),
                 Color(
                     red: max(1.2 * color.red, color.red),
-                    green: max(1.1 * color.green, color.green),
-                    blue: max(1.1 * color.blue, color.blue)
+                    green: 0.9 * color.green,
+                    blue: 0.9 * color.blue
                 )
             ]
         }
         if color.green > color.red, color.green > color.blue {
             colors = [
                 Color(
-                    red: 0.9 * color.red,
+                    red: max(1.1 * color.red, color.red),
                     green: 0.8 * color.green,
-                    blue: 0.9 * color.blue
+                    blue: max(1.1 * color.blue, color.blue)
                 ),
                 Color(rgbaColor: color),
                 Color(
-                    red: max(0.9 * color.red, color.red),
+                    red: 0.9 * color.red,
                     green: max(1.2 * color.green, color.green),
-                    blue: max(0.9 * color.blue, color.blue)
+                    blue: 0.9 * color.blue
                 )
             ]
         }
         if color.blue > color.red, color.blue > color.green {
             colors = [
                 Color(
-                    red: 1.1 * color.red,
-                    green: 1.1 * color.green,
+                    red: max(1.1 * color.red, color.red),
+                    green: max(1.1 * color.green, color.green),
                     blue: 0.8 * color.blue
                 ),
                 Color(rgbaColor: color),
