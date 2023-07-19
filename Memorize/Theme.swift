@@ -7,8 +7,8 @@
 import Foundation
 
 struct Theme: Identifiable, Equatable, Hashable, Codable {
-    var id: UUID
-    let name: String
+    let id: UUID
+    var name: String
     var emojis: Set<String>
     var removedEmojis: Set<String>
     var pairsOfCards: Int

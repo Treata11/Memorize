@@ -10,6 +10,10 @@ import SwiftUI
 struct MemoryGameThemeChooser: View {
     @EnvironmentObject var emojiThemes: EmojiThemes
     
+    @State var popoverPresented = false
+    @State private var selectedTheme: Theme?
+    @State var editMode: EditMode = .inactive
+    
     var body: some View {
         NavigationView {
             List {
@@ -25,8 +29,27 @@ struct MemoryGameThemeChooser: View {
                                     }
                                     Text(emojiString(for: theme)).font(.largeTitle)
                                 }
+                                VStack(alignment: .trailing) {
+                                    if editMode.isEditing {
+                                        Button {
+                                            editCurrent(theme: theme)
+                                            print("success")
+                                        } label: {
+                                            Image(systemName: "square.and.pencil").font(.largeTitle)
+                                        }
+                                        .foregroundColor(Color(rgbaColor: theme.color)).colorInvert()
+                                    }
+                                }
                             }
-
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button(action: {
+                                editCurrent(theme: theme)
+                                print("Success")
+                                }) {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                .tint(.blue)
                         }
                         .listRowBackground(color(for: theme))
                 }
@@ -36,18 +59,34 @@ struct MemoryGameThemeChooser: View {
                     }
                 }
             }
+            .popover(isPresented: $popoverPresented) {
+                ThemeEditor(theme: $selectedTheme)
+            }
             .listStyle(PlainListStyle())
             .navigationTitle("Themes")
             .navigationBarItems(
+                leading: EditButton()
+            )
+            .environment(\.editMode, $editMode)
+            .navigationBarItems(
                 trailing: Button {
-                    withAnimation(.easeInOut) {
-                            // TODO: UI for creation of new Themes
-                    }
+                        // TODO: UI for creation of new Themes
+                    addNewTheme()
                 } label: {
                     Image(systemName: "plus").font(.title2)
                 }
             )
         }
+    }
+    
+    private func addNewTheme() {
+        selectedTheme = nil
+        popoverPresented = true
+    }
+    
+    private func editCurrent(theme: Theme) {
+        selectedTheme = theme
+        popoverPresented = true
     }
     
     private func emojiString(for theme: Theme) -> String {
@@ -62,7 +101,7 @@ struct MemoryGameThemeChooser: View {
         LinearGradient(
             colors: [
                 Color(rgbaColor: theme.color).opacity(0.03),
-                Color(rgbaColor: theme.color).opacity(0.07),
+                Color(rgbaColor: theme.color).opacity(0.05),
                 Color(rgbaColor: theme.color).opacity(0.11),
                 Color(rgbaColor: theme.color).opacity(0.23),
                 Color(rgbaColor: theme.color).opacity(0.31),

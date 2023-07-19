@@ -10,19 +10,51 @@ import SwiftUI
 struct ThemeEditor: View {
     @EnvironmentObject var emojiTheme: EmojiThemes
     
-    @Binding var theme: Theme
+    @Binding var theme: Theme?
+    
+    @State private var themeToEdit: Theme
+    
+    init(theme: Binding<Theme?>) {
+        _theme = theme
+        _themeToEdit = State(
+            wrappedValue: theme.wrappedValue ?? Theme(
+                id: UUID(), name: "Untitled",
+                emojis: [], removedEmojis: [],
+                pairsOfCards: 0, color: RGBAColor(color: .accentColor)
+            )
+        )
+    }
 
     var body: some View {
         Form {
-            Section() {
+            Section("Name of the Theme") {
+                TextEditor(text: $themeToEdit.name)
+            }
+            Section("Manage Emojis") {
 //                Grid(emojiTheme.savedThemes.first!.emojis.map { String($0) }, id: \.self) { emoji in
-                AspectVGrid(items: theme.emojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
-                    Text(emoji).font(Font.system(size: 40))
+                AspectVGrid(items: themeToEdit.emojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
+                    Text(emoji).font(Font.system(size: fontSize))
                         .onTapGesture {
-                           
+                            // TODO: the removing of the emojis
                         }
                 }
+                .frame(height: height)
+            }
+            Section("Number of pairs of Cards") {
+                
+            }
+            Section("Choose Color") {
+                
             }
         }
     }
+    
+    // MARK: - Drawing Constants
+
+    var height: CGFloat {
+        (CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70 ) * 0.51
+        // Paul played around and came up with this sort of calculation as best fit!
+    }
+    
+    let fontSize: CGFloat = 40
 }
