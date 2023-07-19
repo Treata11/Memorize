@@ -81,7 +81,7 @@ struct CardView: View {
                     .rotationEffect(.degrees(card.isMatched ? 360 : 0))
                     .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: card.isMatched)
             }
-            .cardify(isFaceUp: card.isFaceUp)
+            .cardify(isFaceUp: card.isFaceUp, theme: $viewModel.theme)
             .transition(AnyTransition.scale)
         }
     }

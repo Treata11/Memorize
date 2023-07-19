@@ -78,3 +78,56 @@ extension RGBAColor {
     static let red = RGBAColor(red: 1, green: 0, blue: 0, alpha: 1)
     static let yellow = RGBAColor(red: 1, green: 1, blue: 0, alpha: 1)
 }
+
+extension Color {
+    static func calculateGradient(with color: RGBAColor) -> [Color] {
+        var colors: [Color] = []
+//        let maxRGB = max(color.red, color.green, color.blue)
+        if color.red > color.green, color.red > color.blue {
+            colors = [
+                Color(
+                    red: 0.8 * color.red,
+                    green: 0.9 * color.green,
+                    blue: 0.9 * color.blue
+                ),
+                Color(rgbaColor: color),
+                Color(
+                    red: max(1.2 * color.red, color.red),
+                    green: max(1.1 * color.green, color.green),
+                    blue: max(1.1 * color.blue, color.blue)
+                )
+            ]
+        }
+        if color.green > color.red, color.green > color.blue {
+            colors = [
+                Color(
+                    red: 0.9 * color.red,
+                    green: 0.8 * color.green,
+                    blue: 0.9 * color.blue
+                ),
+                Color(rgbaColor: color),
+                Color(
+                    red: max(0.9 * color.red, color.red),
+                    green: max(1.2 * color.green, color.green),
+                    blue: max(0.9 * color.blue, color.blue)
+                )
+            ]
+        }
+        if color.blue > color.red, color.blue > color.green {
+            colors = [
+                Color(
+                    red: 1.1 * color.red,
+                    green: 1.1 * color.green,
+                    blue: 0.8 * color.blue
+                ),
+                Color(rgbaColor: color),
+                Color(
+                    red: 0.9 * color.red,
+                    green: 0.9 * color.green,
+                    blue: max(1.2 * color.blue, color.blue)
+                )
+            ]
+        }
+        return colors
+    }
+}
