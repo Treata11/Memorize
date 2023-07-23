@@ -10,7 +10,7 @@ import SwiftUI
 struct MemoryGameThemeChooser: View {
     @EnvironmentObject var emojiThemes: EmojiThemes
     
-    @State var popoverPresented = false
+    @State var sheetPresented = false
     @State private var selectedTheme: Theme?
     @State var editMode: EditMode = .inactive
     
@@ -59,11 +59,11 @@ struct MemoryGameThemeChooser: View {
                     }
                 }
             }
-            .popover(isPresented: $popoverPresented) {
+            .sheet(isPresented: $sheetPresented) {  // TODO: onDismiss: (() -> Void)?
                 ThemeEditor(theme: $selectedTheme)
             }
             .listStyle(PlainListStyle())
-            .navigationTitle("Themes")
+            .navigationTitle("Emoji Themes")
             .navigationBarItems(
                 leading: EditButton()
             )
@@ -81,15 +81,15 @@ struct MemoryGameThemeChooser: View {
     
     private func addNewTheme() {
         selectedTheme = nil
-        popoverPresented = true
+        sheetPresented = true
     }
     
     private func editCurrent(theme: Theme) {
         selectedTheme = theme
-        popoverPresented = true
+        sheetPresented = true
     }
     
-    private func emojiString(for theme: Theme) -> String {
+    private func emojiString(for theme: Theme) -> String {  // Bogus!
         var emojis: Set<String> = []
         for _ in 0..<5 {
             emojis.insert(theme.emojis.randomElement()!)

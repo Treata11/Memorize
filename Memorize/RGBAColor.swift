@@ -86,45 +86,75 @@ extension Color {
         if color.red > color.green, color.red > color.blue {
             colors = [
                 Color(
-                    red: 0.8 * color.red,
-                    green: 1.1 * color.green,
-                    blue: 1.1 * color.blue
+                    red: 0.9 * color.red,
+                    green: 0.8 * color.green,
+                    blue: 0.8 * color.blue
+                ),
+                Color(
+                    red: color.red,
+                    green: 0.8 * color.green,
+                    blue: 0.8 * color.blue
                 ),
                 Color(rgbaColor: color),
                 Color(
                     red: 1.2 * color.red,
                     green: 0.9 * color.green,
                     blue: 0.9 * color.blue
+                ),
+                Color(
+                    red: 1.3 * color.red,
+                    green: 1.05 * color.green,
+                    blue: 1.05 * color.blue
                 )
             ]
         }
         if color.green > color.red, color.green > color.blue {
             colors = [
                 Color(
-                    red: 1.1 * color.red,
-                    green: 0.8 * color.green,
-                    blue: 1.1 * color.blue
+                    red: 0.8 * color.red,
+                    green: 0.9 * color.green,
+                    blue: 0.8 * color.blue
+                ),
+                Color(
+                    red: 0.8 * color.red,
+                    green: color.green,
+                    blue: 0.8 * color.blue
                 ),
                 Color(rgbaColor: color),
                 Color(
                     red: 0.9 * color.red,
                     green: 1.2 * color.green,
                     blue: 0.9 * color.blue
+                ),
+                Color(
+                    red: 1.05 * color.red,
+                    green: 1.3 * color.green,
+                    blue: 1.05 * color.blue
                 )
             ]
         }
         if color.blue > color.red, color.blue > color.green {
             colors = [
                 Color(
-                    red: 1.1 * color.red,
-                    green: 1.1 * color.green,
-                    blue: 0.8 * color.blue
+                    red: 0.8 * color.red,
+                    green: 0.8 * color.green,
+                    blue: 0.9 * color.blue
+                ),
+                Color(
+                    red: 0.8 * color.red,
+                    green: 0.8 * color.green,
+                    blue: color.blue
                 ),
                 Color(rgbaColor: color),
                 Color(
                     red: 0.9 * color.red,
                     green: 0.9 * color.green,
                     blue: 1.2 * color.blue
+                ),
+                Color(
+                    red: 1.05 * color.red,
+                    green: 1.05 * color.green,
+                    blue: 1.3 * color.blue
                 )
             ]
         }

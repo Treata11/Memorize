@@ -16,14 +16,14 @@ struct ThemeEditor: View {
     
     init(theme: Binding<Theme?>) {
         _theme = theme
-        _themeToEdit = State(
-            wrappedValue: theme.wrappedValue ?? Theme(
-                id: UUID(), name: "Untitled",
-                emojis: [], removedEmojis: [],
-                pairsOfCards: 0, color: RGBAColor(color: .accentColor)
-            )
-        )
+        _themeToEdit = State(wrappedValue: theme.wrappedValue ?? ThemeEditor.blankTheme)
     }
+    
+    static var blankTheme = Theme(
+        id: UUID(), name: "Untitled",
+        emojis: [], removedEmojis: [],
+        pairsOfCards: 0, color: RGBAColor(color: .accentColor)
+    )
 
     var body: some View {
         Form {
@@ -52,7 +52,7 @@ struct ThemeEditor: View {
     // MARK: - Drawing Constants
 
     var height: CGFloat {
-        (CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70 ) * 0.51
+        (CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70 ) * 0.55
         // Paul played around and came up with this sort of calculation as best fit!
     }
     

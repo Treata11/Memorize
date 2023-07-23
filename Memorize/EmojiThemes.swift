@@ -11,7 +11,6 @@ import Combine
 class EmojiThemes: ObservableObject
 {
     @Published var savedThemes: [Theme]
-//    @Published var ThemeModel = Theme(from: <#Decoder#>)
     
     static let persistanceKey = "EmojiMemoryGameSavedThemes"
     
