@@ -35,6 +35,71 @@ struct ThemeEditor: View {
                 AspectVGrid(items: themeToEdit.emojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
                     Text(emoji).font(Font.system(size: fontSize))
                         .onTapGesture {
+                            if themeToEdit.emojis.count > 2 {
+                                // TODO: Enhance the feedback with transition
+                                themeToEdit.removedEmojis.insert(themeToEdit.removeEmoji(emoji))
+                            } else {
+                                print("Would cause a crash")
+                            }
+                        }
+                }
+                .frame(height: heightForEmojis)
+            }
+            Section("Bin") {
+                AspectVGrid(items: themeToEdit.removedEmojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
+                    Text(emoji).font(Font.system(size: fontSize))
+                }
+                .frame(height: heightForRemovedEmojis)
+            }
+            Section("Number of pairs of Cards") {
+                if themeToEdit.emojis.count > 0 {
+                    Stepper(value: $themeToEdit.pairsOfCards, in: 0...themeToEdit.emojis.count) {
+                        Text("\(themeToEdit.pairsOfCards) Pairs")
+                    }
+                }
+            }
+            Section("Choose Color") {
+                // TODO: ColorPicker
+            }
+        }
+    }
+    
+    // MARK: - Drawing Constants
+
+    var heightForEmojis: CGFloat {
+        return (CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70 ) * 0.55
+        // Paul played around and came up with this sort of calculation as best fit!
+    }
+    
+    var heightForRemovedEmojis: CGFloat {
+        (CGFloat((themeToEdit.removedEmojis.count - 1) / 6) * 70 + 70 ) * 0.55
+    }
+    
+    let fontSize: CGFloat = 40
+}
+
+struct AbsoluteThemeEditor: View {
+    @EnvironmentObject var emojiTheme: EmojiThemes
+    
+//    @Binding var selectedTheme: Binding<Theme>
+    
+    var theme: Theme
+    
+//    init(selectedTheme: Binding<Theme>) {
+//        theme = selectedTheme.wrappedValue
+//        _selectedTheme = Binding(selectedTheme)
+//    }
+    
+    var body: some View {
+        Form {
+            Section("Name of the Theme") {
+                // MARK: Fix!
+//                TextEditor(text: $theme.name)
+            }
+            Section("Manage Emojis") {
+                AspectVGrid(items: theme.emojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
+                    Text(emoji).font(Font.system(size: fontSize))
+                        .onTapGesture {
                             // TODO: the removing of the emojis
                         }
                 }
@@ -52,7 +117,7 @@ struct ThemeEditor: View {
     // MARK: - Drawing Constants
 
     var height: CGFloat {
-        (CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70 ) * 0.55
+        (CGFloat((theme.emojis.count - 1) / 6) * 70 + 70 ) * 0.55
         // Paul played around and came up with this sort of calculation as best fit!
     }
     
