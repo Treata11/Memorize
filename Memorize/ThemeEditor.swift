@@ -20,6 +20,9 @@ struct ThemeEditor: View {
     }
     
     @State private var themeToEdit: Theme
+    @State private var emojisToAdd = ""
+    @State private var explainThemeInitialization = false
+    @State private var explainMinimumCardCountForTheme = false
     
     init(theme: Binding<Theme?>, isPresented: Binding<Bool>) {
         _theme = theme
@@ -30,43 +33,85 @@ struct ThemeEditor: View {
     public static var blankTheme = Theme(
         id: UUID(), name: "Untitled",
         emojis: [], removedEmojis: [],
-        pairsOfCards: 0, color: RGBAColor(color: .accentColor)
+        pairsOfCards: 2, color: RGBAColor(color: .accentColor)
     )
 
     var body: some View {
         VStack(spacing: 0) {
             if isPresented {
                 HStack() {
+                    Button("Cancle") {
+                        isPresented = false
+                    }
                     Spacer()
-                    saveButton
+                    saveButton.padding(.vertical)
                 }
                 .padding(.horizontal)
-                
-                Divider()
+                .background(BlurryView(style: .systemMaterial))
             }
             Form {
                 Section("Name of the Theme") {
                     TextEditor(text: $themeToEdit.name).unredacted()
                 }
-                Section("Manage Emojis") {
+                Section("Add Emoji") {
+                    HStack {
+                        TextEditor(text: $emojisToAdd)
+                        Spacer()
+                        Button("Add") {
+                            if themeToEdit.emojis.count > 1 {
+                                // TODO: logic of adding the emojis
+                                themeToEdit.addEmoji(emojisToAdd)
+                                emojisToAdd = ""
+                            } else {
+                                if emojisToAdd.filter({ !$0.isWhitespace }).count > 1 {
+                                    themeToEdit.addEmoji(emojisToAdd)
+                                    emojisToAdd = ""
+                                } else {
+                                    explainMinimumCardCountForTheme = true
+                                }
+                            }
+                        }
+                        .alert(isPresented: $explainMinimumCardCountForTheme) {
+                            return Alert(
+                                title: Text("Not Enough Emojis Are Added"),
+///                                message: "Add at least two emojis to the Empty Pack of Theme's emojis to proceed",
+                                primaryButton: .default(Text("Add Two Randomly")) {
+                                    emojisToAdd += someRandomEmojis.shuffled().first! + someRandomEmojis.shuffled().first!
+                                },
+                                secondaryButton: .cancel()
+                            )
+                        }
+                    }
+                }
+                Section(header: Text("Emojis To Play"), footer: Text("Tap emoji to exclude")) {
                     AspectVGrid(items: themeToEdit.emojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
-                        Text(emoji).font(Font.system(size: fontSize))
+                        Text(emoji).font(Font.system(size: fontSize)).frame(width: 40, height: 40)
                             .onTapGesture {
                                 if themeToEdit.emojis.count > 2 {
                                     // TODO: Enhance the feedback with transition
                                     themeToEdit.removedEmojis.insert(themeToEdit.removeEmoji(emoji))
                                 } else {
-                                    print("Would cause a crash")
+                                    // TODO: Will cause a Crash!
                                 }
                             }
                     }
-                    .frame(height: heightForEmojis)
+                    .frame(
+                        minHeight: heightForEmojis * 0.55,
+                        idealHeight: heightForEmojis * 0.7,
+                        maxHeight: heightForRemovedEmojis
+                    )
                 }
-                Section("Bin") {
-                    AspectVGrid(items: themeToEdit.removedEmojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
-                        Text(emoji).font(Font.system(size: fontSize))
+                if !themeToEdit.removedEmojis.isEmpty {
+                    Section("Bin") {
+                        AspectVGrid(items: themeToEdit.removedEmojis.map { String($0) }, id: \.self, aspectRatio: 1) { emoji in
+                            Text(emoji).font(Font.system(size: fontSize))
+                        }
+                        .frame(
+                            minHeight: heightForRemovedEmojis * 0.55,
+                            idealHeight: heightForRemovedEmojis * 0.7,
+                            maxHeight: heightForRemovedEmojis
+                        )
                     }
-                    .frame(height: heightForRemovedEmojis)
                 }
                 Section("Number of pairs of Cards") {
                     if themeToEdit.emojis.count > 0 {
@@ -80,11 +125,6 @@ struct ThemeEditor: View {
                 }
             }
             .toolbar {
-                //            ToolbarItem(placement: .navigationBarTrailing) {
-                //                Button("Done") {
-                //                    isPresented = false
-                //                }
-                //            }
                 ToolbarItem(placement: .confirmationAction) {
                     saveButton
                 }
@@ -93,23 +133,45 @@ struct ThemeEditor: View {
     }
     
     var saveButton: some View {
-        Button("Done") {
-            // TODO: Persist!
-            
-            isPresented = false
+        ZStack {
+            if themeToEdit.emojis.count > 3 {
+                Button("Done") {
+                    emojiTheme.add(theme: themeToEdit)
+                    isPresented = false
+                }
+                .disabled(themeToEdit.emojis.count<4)
+            } else {
+                Button("Done") {
+                    explainThemeInitialization = true
+                    print("Failed to add Theme!")
+                }
+                .foregroundColor(.gray)
+                .alert(isPresented: $explainThemeInitialization) {
+                    return Alert(
+                        title: Text("Failed To Create Theme"),
+                        message: Text("A Theme would at least need Four emojis."),
+                        dismissButton: .cancel(Text("ΟΚ"))
+                    )
+                }
+            }
         }
     }
     
     // MARK: - Drawing Constants
 
     var heightForEmojis: CGFloat {
-        return (CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70 ) * 0.55
+        CGFloat((themeToEdit.emojis.count - 1) / 6) * 70 + 70
         // Paul played around and came up with this sort of calculation as best fit!
     }
     
     var heightForRemovedEmojis: CGFloat {
-        (CGFloat((themeToEdit.removedEmojis.count - 1) / 6) * 70 + 70 ) * 0.55
+        CGFloat((themeToEdit.removedEmojis.count - 1) / 6) * 70 + 70
     }
     
     let fontSize: CGFloat = 40
+    
+    let someRandomEmojis = [
+        "😀", "😃", "😄", "😁", "😆", "😅", "🤣", "😂", "🙂", "🙃", "😉",
+        "😊", "😇", "🥰", "😍", "🤩", "😘", "😗", "😚", "😙", "😋", "😛",
+        ]
 }

@@ -19,10 +19,9 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         return try? JSONEncoder().encode(self)
     }
     
-    mutating func addEmoji(_ emojisToAdd: String, to theme: Theme) {
-        emojisToAdd.forEach { emoji in
-            emojis.insert(String(emoji))
-        }
+    mutating func addEmoji(_ emojisToAdd: String) {
+        let trimmedString = emojisToAdd.filter { !$0.isWhitespace }
+        trimmedString.forEach { emoji in emojis.insert(String(emoji)) }
     }
     
     mutating func removeEmoji(_ emojisToRemove: String) -> String {
@@ -90,7 +89,7 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
         emojis: ["🏳️", "🏴", "🏴‍☠️", "🏁", "🚩", "🇺🇳", "🇦🇶"],
         removedEmojis: [],
         pairsOfCards: Int.random(in: 3...5),
-        color: .fuchsia
+        color: .purple
         ////        gradient: Gradient.flagsEmojisGradient
     )
     static let halloween = Theme(

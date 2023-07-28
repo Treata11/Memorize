@@ -97,8 +97,8 @@ struct MemoryGameThemeChooser: View {
                 Color(rgbaColor: theme.color).opacity(0.53),
                 Color(rgbaColor: theme.color).opacity(0.61),
                 Color(rgbaColor: theme.color).opacity(0.73),
-                Color(rgbaColor: theme.color).opacity(0.89),
-                Color(rgbaColor: theme.color).opacity(0.97),
+                Color(rgbaColor: theme.color).opacity(0.87),
+                Color(rgbaColor: theme.color).opacity(0.91),
             ],
             startPoint: .leading,
             endPoint: .trailing

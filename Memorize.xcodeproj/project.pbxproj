@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		610CDBA42A73D3720029496D /* BlurryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CDBA32A73D3720029496D /* BlurryView.swift */; };
 		611222072A5C169900121EE7 /* RGBAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611222062A5C169900121EE7 /* RGBAColor.swift */; };
 		614074292A6042B800012DB4 /* MemoryGameThemeChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614074282A6042B800012DB4 /* MemoryGameThemeChooser.swift */; };
 		6140742B2A60449400012DB4 /* EmojiThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6140742A2A60449400012DB4 /* EmojiThemes.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		610CDBA32A73D3720029496D /* BlurryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurryView.swift; sourceTree = "<group>"; };
 		611222062A5C169900121EE7 /* RGBAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColor.swift; sourceTree = "<group>"; };
 		614074282A6042B800012DB4 /* MemoryGameThemeChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameThemeChooser.swift; sourceTree = "<group>"; };
 		6140742A2A60449400012DB4 /* EmojiThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiThemes.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 		61BF55E129BA47800001B559 /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
+				610CDBA32A73D3720029496D /* BlurryView.swift */,
 				614C2D912A67130E0015E055 /* AspectVGrid.swift */,
 				616FA2E62A66D66500DBBA2D /* ThemeEditor.swift */,
 				6140742A2A60449400012DB4 /* EmojiThemes.swift */,
@@ -200,6 +203,7 @@
 				61C49F0D2A5C268A009678F3 /* Theme.swift in Sources */,
 				614BCB3729E6EFC70066B866 /* Cardify.swift in Sources */,
 				616FA2E72A66D66500DBBA2D /* ThemeEditor.swift in Sources */,
+				610CDBA42A73D3720029496D /* BlurryView.swift in Sources */,
 				61D03ECB29CB71B20019FC7B /* Array+Only.swift in Sources */,
 				614074292A6042B800012DB4 /* MemoryGameThemeChooser.swift in Sources */,
 				61C49F0F2A5C3110009678F3 /* Color&Gradient.swift in Sources */,

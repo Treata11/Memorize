@@ -69,14 +69,14 @@ extension RGBAColor {
 }
 
 extension RGBAColor {
-    static let blue = RGBAColor(red: 0, green: 0, blue: 1, alpha: 1)
+    static let blue = RGBAColor(red: 52/255, green: 120/255, blue: 246/255, alpha: 1)
     static let cream = RGBAColor(red: 249/255, green: 223/255, blue: 205/255, alpha: 1)
-    static let fuchsia = RGBAColor(red: 1, green: 0, blue: 1, alpha: 1)
-    static let green = RGBAColor(red: 0, green: 1, blue: 0, alpha: 1)
-    static let orange = RGBAColor(red: 1, green: 165/255, blue: 0, alpha: 1)
-    static let pink = RGBAColor(red: 255/255, green: 192/255, blue: 203/255, alpha: 1)
-    static let red = RGBAColor(red: 1, green: 0, blue: 0, alpha: 1)
-    static let yellow = RGBAColor(red: 1, green: 1, blue: 0, alpha: 1)
+    static let purple = RGBAColor(red: 163/255, green: 87/255, blue: 215/255, alpha: 1)
+    static let green = RGBAColor(red: 101/255, green: 196/255, blue: 102/255, alpha: 1)
+    static let orange = RGBAColor(red: 241/255, green: 154/255, blue: 55/255, alpha: 1)
+    static let pink = RGBAColor(red: 235/255, green: 68/255, blue: 90/255, alpha: 1)
+    static let red = RGBAColor(red: 235/255, green: 78/255, blue: 61/255, alpha: 1)
+    static let yellow = RGBAColor(red: 247/255, green: 206/255, blue: 69/255, alpha: 1)
 }
 
 extension Color {
