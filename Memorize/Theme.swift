@@ -5,6 +5,7 @@
 //  Created by Treata Norouzi on 3/24/23.
 //
 import Foundation
+import SwiftUI
 
 struct Theme: Identifiable, Equatable, Hashable, Codable {
     let id: UUID
@@ -30,6 +31,10 @@ struct Theme: Identifiable, Equatable, Hashable, Codable {
             emojis.remove(emoji)
         }
         return emojisToRemove
+    }
+    
+    mutating func set(color: Color) {  // imported UI
+        self.color = RGBAColor(color: color)
     }
     
 //    mutating func removeEmoji(_ emojisToRemove: String, from theme: Theme) -> String {

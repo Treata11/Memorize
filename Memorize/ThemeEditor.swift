@@ -59,7 +59,6 @@ struct ThemeEditor: View {
                         Spacer()
                         Button("Add") {
                             if themeToEdit.emojis.count > 1 {
-                                // TODO: logic of adding the emojis
                                 themeToEdit.addEmoji(emojisToAdd)
                                 emojisToAdd = ""
                             } else {
@@ -76,7 +75,7 @@ struct ThemeEditor: View {
                                 title: Text("Not Enough Emojis Are Added"),
 ///                                message: "Add at least two emojis to the Empty Pack of Theme's emojis to proceed",
                                 primaryButton: .default(Text("Add Two Randomly")) {
-                                    emojisToAdd += someRandomEmojis.shuffled().first! + someRandomEmojis.shuffled().first!
+                                    emojisToAdd += randomEmoji(2)  // bogus!
                                 },
                                 secondaryButton: .cancel()
                             )
@@ -121,7 +120,14 @@ struct ThemeEditor: View {
                     }
                 }
                 Section("Choose Color") {
-                    // TODO: ColorPicker
+                    ColorPicker(
+                        "Color",
+                        selection: Binding(
+                            get: { Color(rgbaColor: themeToEdit.color) },
+                            set: { color in return themeToEdit.set(color: color) }),
+                        supportsOpacity: true   // TODO: Set the alpha to be watching this value
+                    )
+                        .padding()
                 }
             }
             .toolbar {
@@ -170,8 +176,20 @@ struct ThemeEditor: View {
     
     let fontSize: CGFloat = 40
     
-    let someRandomEmojis = [
-        "😀", "😃", "😄", "😁", "😆", "😅", "🤣", "😂", "🙂", "🙃", "😉",
-        "😊", "😇", "🥰", "😍", "🤩", "😘", "😗", "😚", "😙", "😋", "😛",
-        ]
+    func randomEmoji(_ count: UInt) -> String {
+        let someRandomEmojis = [
+            "😀", "😃", "😄", "😁", "😆", "😅", "🤣", "😂", "🙂", "🙃", "😉",
+            "😊", "😇", "🥰", "😍", "🤩", "😘", "😗", "😚", "😙", "😋", "😛",
+            "💀", "👻", "🎃", "🪦", "🕷", "🧟‍♀️", "🧛🏻‍♀️", "👹", "⚽️", "🏀", "🏈",
+            "⚾️", "🎾", "🏐", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️",
+            "🍀", "🍄", "🪸", "🌾", "💐", "💐", "🪷", "🌺", "🌸", "🌼", "🌻",
+            "🌹", "👨‍🦰", "👩‍🦰", "👨‍🦳", "👩‍🦳", "👩‍🦲", "🤮", "🤯", "🤪", "🤓", "🧐",
+            "🕵️‍♂️", "🧝‍♂️", "🤴", "👸", "🤶", "🦸‍♂️", "🦹‍♂️", "🧙‍♂️", "👨‍⚕️", "👩‍⚕️", "👨‍🎓",
+            "🐶", "🦊", "🐼", "🐯", "🦁", "🐸", "🐔", "🙈", "🐨", "🐌", "🦋",
+            "🦄", "🐣", "🐻‍❄️", "🐮", "🐰", "🐹", "🐞", "🐢", "🦖", "🐡", "🐬",
+            "🦢", "🐿", "🦔", "🕊", "🐈", "🦙", "🐏", "🐫", "🦣", "🦍", "🦈",
+        ].shuffled()
+        return someRandomEmojis.first! + someRandomEmojis.last!
+        // TODO: Use count to return the specific number from emojis in a range ...
+    }
 }
