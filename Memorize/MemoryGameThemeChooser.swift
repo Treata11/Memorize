@@ -14,24 +14,25 @@ struct MemoryGameThemeChooser: View {
     @State private var selectedTheme: Theme?
     @State var editMode: EditMode = .inactive
     
+    @ViewBuilder
     var body: some View {
         NavigationView {
             List {
                 ForEach(emojiThemes.savedThemes) { theme in
                     if editMode.isEditing == true {
-                        NavigationLink(destination: ThemeEditor(theme: Binding(get: { theme }, set: { _ in return } ))) {
-                            ListOfThemes(theme: theme)
+                        NavigationLink(destination: ThemeEditor(theme: Binding(get: { theme }, set: { _ in return } ), isPresented: $sheetPresented)) {
+                            ThemeDescription(theme: theme)
                         }
                         .listRowBackground(linearGradient(for: theme))
                     } else {
                         NavigationLink(destination: EmojiMemoryGameView(viewModel: EmojiMemoryGame(theme: theme))
                             .navigationTitle(theme.name)) {
-                                ListOfThemes(theme: theme)
+                                ThemeDescription(theme: theme)
                             }
                             .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                 Button(action: {
                                     editCurrent(theme: Binding(get: { theme }, set: { _ in return } ))
-                                    print("Success")
+                                    print("Editing: \(theme)")
                                 }) {
                                     Label("Edit", systemImage: "pencil")
                                 }
@@ -45,9 +46,10 @@ struct MemoryGameThemeChooser: View {
                         emojiThemes.remove(theme: theme)
                     }
                 }
+                .onMove { emojiThemes.savedThemes.move(fromOffsets: $0, toOffset: $1) } // Bogus!
             }
             .sheet(isPresented: $sheetPresented) {  // TODO: onDismiss: (() -> Void)?
-                ThemeEditor(theme: $selectedTheme)
+                ThemeEditor(theme: $selectedTheme, isPresented: $sheetPresented)
             }
             .listStyle(PlainListStyle())
             .navigationTitle("Emoji Themes")
@@ -104,7 +106,7 @@ struct MemoryGameThemeChooser: View {
     }
  }
 
-struct ListOfThemes: View {
+struct ThemeDescription: View {
     let theme: Theme
     
     var body: some View {
